@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import { NavLink } from "react-router-dom";
-
+import GuestHouseLogo from '../../assets/img/GuestHouseLogoWhite.svg'
 // reactstrap components
 import {
   Collapse,
@@ -46,7 +46,7 @@ class AuthNavbar extends React.Component {
         <Container>
           <div className="navbar-wrapper">
             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-              Paper Dashboard PRO React
+            <img type="image/svg+xml" src={GuestHouseLogo} height="30px"/>
             </NavbarBrand>
           </div>
           <button
@@ -75,27 +75,9 @@ class AuthNavbar extends React.Component {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/auth/register" className="nav-link">
-                  <i className="nc-icon nc-book-bookmark" />
-                  Register
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink to="/auth/login" className="nav-link">
                   <i className="nc-icon nc-tap-01" />
                   Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/admin/user-profile" className="nav-link">
-                  <i className="nc-icon nc-satisfied" />
-                  User
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/auth/lock-screen" className="nav-link">
-                  <i className="nc-icon nc-key-25" />
-                  Lock
                 </NavLink>
               </NavItem>
             </Nav>

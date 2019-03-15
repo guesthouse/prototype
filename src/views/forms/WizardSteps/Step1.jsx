@@ -99,68 +99,11 @@ class Wizard extends React.Component {
         </h5>
         <Row className="justify-content-center">
           <Col sm="5">
-            <PictureUpload />
-          </Col>
-          <Col sm="5">
-          <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input/>
-            </InputGroup>
-             
-            <InputGroup
-              className={classnames(this.state.businessnameState, {
-                "input-group-focus": this.state.businessnameFocus
-              })}
-            >
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <i className="nc-icon nc-circle-10" />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                name="businessName"
-                placeholder="Business Name (required)"
-                type="text"
-                onChange={e => this.change(e, "businessName", "length", 1)}
-                onFocus={e => this.setState({ businessNameFocus: true })}
-                onBlur={e => this.setState({ businessNameFocus: false })}
-              />
-              {this.state.businessName === "has-danger" ? (
-                <label className="error">This field is required.</label>
-              ) : null}
-            </InputGroup>
-            <InputGroup
-              className={classnames(this.state.phoneState, {
-                "input-group-focus": this.state.phoneFocus
-              })}
-            >
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <i className="nc-icon nc-circle-10" />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                name="phone"
-                placeholder="Phone Number (required)"
-                type="text"
-                onChange={e => this.change(e, "phone", "length", 1)}
-                onFocus={e => this.setState({ phoneFocus: true })}
-                onBlur={e => this.setState({ phoneFocus: false })}
-              />
-              {this.state.phoneName === "has-danger" ? (
-                <label className="error">This field is required.</label>
-              ) : null}
-            </InputGroup>
-          </Col>
-    
-          <Col  sm="5">
-            <InputGroup
+          <PictureUpload />
+          <InputGroup
                 className={classnames(this.state.firstnameState, {
                   "input-group-focus": this.state.firstnameFocus
-                })}
+                }, "mt-3")}
               >
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>
@@ -202,7 +145,74 @@ class Wizard extends React.Component {
               ) : null}
             </InputGroup>
           </Col>
-          <Col lg="5">
+    
+          <Col  sm="5">
+          <InputGroup
+              className={classnames(this.state.emailState, {
+                "input-group-focus": this.state.emailFocus
+              })}
+            >
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="nc-icon nc-circle-10" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="email"
+                placeholder="Email (required)"
+                type="text"
+                onChange={e => this.change(e, "email", "length", 1)}
+                onFocus={e => this.setState({ emailFocus: true })}
+                onBlur={e => this.setState({ emailFocus: false })}
+              />
+              {this.state.location === "has-danger" ? (
+                <label className="error">This field is required.</label>
+              ) : null}
+            </InputGroup>
+            <InputGroup
+              className={classnames(this.state.businessNameState, {
+                "input-group-focus": this.state.businessNameFocus
+              })}
+            >
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="nc-icon nc-circle-10" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="businessNamme"
+                placeholder="Business Name (required)"
+                type="text"
+                onChange={e => this.change(e, "businessName", "length", 1)}
+                onFocus={e => this.setState({ businessNameFocus: true })}
+                onBlur={e => this.setState({ businessNameFocus: false })}
+              />
+              {this.state.businessName === "has-danger" ? (
+                <label className="error">This field is required.</label>
+              ) : null}
+            </InputGroup>
+            <InputGroup
+              className={classnames(this.state.phoneState, {
+                "input-group-focus": this.state.phoneFocus
+              })}
+            >
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="nc-icon nc-circle-10" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="phone"
+                placeholder="Phone Number (required)"
+                type="text"
+                onChange={e => this.change(e, "phone", "length", 1)}
+                onFocus={e => this.setState({ phoneFocus: true })}
+                onBlur={e => this.setState({ phoneFocus: false })}
+              />
+              {this.state.phoneName === "has-danger" ? (
+                <label className="error">This field is required.</label>
+              ) : null}
+            </InputGroup>
             <InputGroup
               className={classnames(this.state.urlState, {
                 "input-group-focus": this.state.urlFocus

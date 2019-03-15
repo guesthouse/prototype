@@ -10,7 +10,11 @@ class Wizard extends React.Component {
     this.state = {
       design: false,
       code: false,
-      develop: false
+      develop: false,
+      pottery: false,
+      tables: false,
+      chairs: false,
+      rugs: false,
     };
   }
   clickChoice = choiceName => {
@@ -86,21 +90,21 @@ class Wizard extends React.Component {
               <Col sm="3">
                 <div
                   className={classnames("choice", {
-                    active: this.state.develop
+                    active: this.state.beds
                   })}
                   data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
+                  onClick={() => this.clickChoice("beds")}
                 >
                   <input
-                    defaultValue="Develop"
+                    defaultValue="beds"
                     name="jobb"
                     type="checkbox"
-                    defaultChecked={this.state.develop}
+                    defaultChecked={this.state.beds}
                   />
                   <div className="icon">
                     <i className="nc-icon nc-atom" />
                   </div>
-                  <h6>Develop</h6>
+                  <h6>Beds</h6>
                 </div>
               </Col>
             </Row>
@@ -110,241 +114,79 @@ class Wizard extends React.Component {
               <Col sm="3">
                 <div
                   className={classnames("choice", {
-                    active: this.state.design
+                    active: this.state.pottery
                   })}
                   data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("design")}
+                  onClick={() => this.clickChoice("pottery")}
                 >
                   <input
-                    defaultValue="Design"
+                    defaultValue="pottery"
                     name="jobb"
                     type="checkbox"
-                    defaultChecked={this.state.design}
+                    defaultChecked={this.state.pottery}
                   />
                   <div className="icon">
                     <i className="nc-icon nc-ruler-pencil" />
                   </div>
-                  <h6>Design</h6>
+                  <h6>Pottery</h6>
                 </div>
               </Col>
               <Col sm="3">
                 <div
-                  className={classnames("choice", { active: this.state.code })}
+                  className={classnames("choice", { active: this.state.chairs })}
                   data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("code")}
+                  onClick={() => this.clickChoice("chairs")}
                 >
                   <input
-                    defaultValue="Code"
+                    defaultValue="chairs"
                     name="jobb"
                     type="checkbox"
-                    defaultChecked={this.state.code}
+                    defaultChecked={this.state.chairs}
                   />
                   <div className="icon">
                     <i className="nc-icon nc-laptop" />
                   </div>
-                  <h6>Code</h6>
+                  <h6>Chairs</h6>
                 </div>
               </Col>
               <Col sm="3">
                 <div
                   className={classnames("choice", {
-                    active: this.state.develop
+                    active: this.state.rugs
                   })}
                   data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
+                  onClick={() => this.clickChoice("rugs")}
                 >
                   <input
-                    defaultValue="Develop"
+                    defaultValue="rugs"
                     name="jobb"
                     type="checkbox"
-                    defaultChecked={this.state.develop}
+                    defaultChecked={this.state.rugs}
                   />
                   <div className="icon">
                     <i className="nc-icon nc-atom" />
                   </div>
-                  <h6>Develop</h6>
+                  <h6>Rugs</h6>
                 </div>
               </Col>
               <Col sm="3">
                 <div
                   className={classnames("choice", {
-                    active: this.state.develop
+                    active: this.state.tables
                   })}
                   data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
+                  onClick={() => this.clickChoice("tables")}
                 >
                   <input
-                    defaultValue="Develop"
+                    defaultValue="tables"
                     name="jobb"
                     type="checkbox"
-                    defaultChecked={this.state.develop}
+                    defaultChecked={this.state.tables}
                   />
                   <div className="icon">
                     <i className="nc-icon nc-atom" />
                   </div>
-                  <h6>Develop</h6>
-                </div>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.design
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("design")}
-                >
-                  <input
-                    defaultValue="Design"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.design}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-ruler-pencil" />
-                  </div>
-                  <h6>Design</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", { active: this.state.code })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("code")}
-                >
-                  <input
-                    defaultValue="Code"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.code}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-laptop" />
-                  </div>
-                  <h6>Code</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.develop
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
-                >
-                  <input
-                    defaultValue="Develop"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.develop}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-atom" />
-                  </div>
-                  <h6>Develop</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.develop
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
-                >
-                  <input
-                    defaultValue="Develop"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.develop}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-atom" />
-                  </div>
-                  <h6>Develop</h6>
-                </div>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.design
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("design")}
-                >
-                  <input
-                    defaultValue="Design"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.design}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-ruler-pencil" />
-                  </div>
-                  <h6>Design</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", { active: this.state.code })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("code")}
-                >
-                  <input
-                    defaultValue="Code"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.code}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-laptop" />
-                  </div>
-                  <h6>Code</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.develop
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
-                >
-                  <input
-                    defaultValue="Develop"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.develop}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-atom" />
-                  </div>
-                  <h6>Develop</h6>
-                </div>
-              </Col>
-              <Col sm="3">
-                <div
-                  className={classnames("choice", {
-                    active: this.state.develop
-                  })}
-                  data-toggle="wizard-checkbox"
-                  onClick={() => this.clickChoice("develop")}
-                >
-                  <input
-                    defaultValue="Develop"
-                    name="jobb"
-                    type="checkbox"
-                    defaultChecked={this.state.develop}
-                  />
-                  <div className="icon">
-                    <i className="nc-icon nc-atom" />
-                  </div>
-                  <h6>Develop</h6>
+                  <h6>Tables</h6>
                 </div>
               </Col>
             </Row>

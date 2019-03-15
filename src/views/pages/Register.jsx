@@ -1,5 +1,4 @@
 import React from "react";
-
 // reactstrap components
 import {
   Button,
@@ -38,7 +37,7 @@ class Register extends React.Component {
                   <i className="nc-icon nc-tv-2" />
                 </div>
                 <div className="description">
-                  <h5 className="info-title">Marketing</h5>
+                  <h5 className="info-title">Streamlined Communication</h5>
                   <p className="description">
                     We've created the marketing campaign of the website. It was
                     a very interesting collaboration.
@@ -50,7 +49,7 @@ class Register extends React.Component {
                   <i className="nc-icon nc-html5" />
                 </div>
                 <div className="description">
-                  <h5 className="info-title">Fully Coded in HTML5</h5>
+                  <h5 className="info-title">Inventory & Metrics</h5>
                   <p className="description">
                     We've developed the website with HTML5 and CSS3. The client
                     has access to the code using GitHub.
@@ -62,7 +61,7 @@ class Register extends React.Component {
                   <i className="nc-icon nc-atom" />
                 </div>
                 <div className="description">
-                  <h5 className="info-title">Built Audience</h5>
+                  <h5 className="info-title">Photo Assets</h5>
                   <p className="description">
                     There is also a Fully Customizable CMS Admin Dashboard for
                     this product.
@@ -73,18 +72,14 @@ class Register extends React.Component {
             <Col className="mr-auto" lg="4" md="6">
               <Card className="card-signup text-center">
                 <CardHeader>
-                  <CardTitle tag="h4">Register</CardTitle>
+                  <CardTitle tag="h4">Sign Up</CardTitle>
                   <div className="social">
                     <Button className="btn-icon btn-round" color="twitter">
-                      <i className="fa fa-twitter" />
-                    </Button>
-                    <Button className="btn-icon btn-round" color="dribbble">
-                      <i className="fa fa-dribbble" />
+                      <i className="fa fa-google" />
                     </Button>
                     <Button className="btn-icon btn-round" color="facebook">
                       <i className="fa fa-facebook-f" />
                     </Button>
-                    <p className="card-description">or be classical</p>
                   </div>
                 </CardHeader>
                 <CardBody>
@@ -112,6 +107,14 @@ class Register extends React.Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input placeholder="Email..." type="email" />
+                    </InputGroup>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="nc-icon nc-touch-id" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input placeholder="passsword..." type="password" />
                     </InputGroup>
                     <FormGroup check className="text-left">
                       <Label check>
@@ -143,7 +146,7 @@ class Register extends React.Component {
         <div
           className="full-page-background"
           style={{
-            backgroundImage: `url(${require("assets/img/bg/jan-sendereks.jpg")})`
+            backgroundImage: `url(${require("assets/img/dinnertable.jpg")})`
           }}
         />
       </div>

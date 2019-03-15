@@ -53,13 +53,13 @@ const routes = [
   //       component: Login,
   //       layout: "/auth"
   //     },
-  //     {
-  //       path: "/register",
-  //       name: "Register",
-  //       mini: "R",
-  //       component: Register,
-  //       layout: "/auth"
-  //     },
+      {
+        path: "/register",
+        name: "Register",
+        icon: "nc-icon nc-book-bookmark",
+        component: Register,
+        layout: "/auth"
+      },
   //     {
   //       path: "/lock-screen",
   //       name: "LockScreen",

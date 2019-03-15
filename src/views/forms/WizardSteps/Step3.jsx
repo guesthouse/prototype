@@ -11,53 +11,12 @@ class Wizard extends React.Component {
       <>
         <Row className="justify-content-center">
           <Col sm="12">
-            <h5 className="info-text">Are you living in a nice area?</h5>
+            <h5 className="info-text">What else would you like us to know?</h5>
           </Col>
           <Col sm="7">
             <FormGroup>
-              <label>Street Name</label>
-              <Input type="text" />
-            </FormGroup>
-          </Col>
-          <Col sm="3">
-            <FormGroup>
-              <label>Street No.</label>
-              <Input type="text" />
-            </FormGroup>
-          </Col>
-          <Col sm="5">
-            <FormGroup>
-              <label>City</label>
-              <Input type="text" />
-            </FormGroup>
-          </Col>
-          <Col sm="5">
-            <FormGroup>
-              <label>Country</label>
-              <Select
-                className="react-select"
-                classNamePrefix="react-select"
-                name=""
-                onChange={() => console.log("hey")}
-                options={[
-                  {
-                    value: "Afghanistan",
-                    label: " Afghanistan "
-                  },
-                  { value: "Albania", label: " Albania " },
-                  { value: "Algeria", label: " Algeria " },
-                  {
-                    value: "American Samoa",
-                    label: " American Samoa "
-                  },
-                  { value: "Andorra", label: " Andorra " },
-                  { value: "Angola", label: " Angola " },
-                  { value: "Anguilla", label: " Anguilla " },
-                  { value: "Antarctica", label: " Antarctica " }
-                ]}
-                placeholder="Single Select"
-                value=""
-              />
+              <label>Additional Information</label>
+              <Input type="textarea"/>
             </FormGroup>
           </Col>
         </Row>
