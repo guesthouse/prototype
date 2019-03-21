@@ -5,7 +5,7 @@ import { Nav, Collapse } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
-import logo from "assets/img/react-logo.png";
+import logo from "assets/img/GuestHouseLogoWhite.svg";
 
 var ps;
 
@@ -137,20 +137,7 @@ class Sidebar extends React.Component {
         data-active-color={this.props.activeColor}
       >
         <div className="logo">
-          <a
-            href="https://www.creative-tim.com"
-            className="simple-text logo-mini"
-          >
-            <div className="logo-img">
-              <img src={logo} alt="react-logo" />
-            </div>
-          </a>
-          <a
-            href="https://www.creative-tim.com"
-            className="simple-text logo-normal"
-          >
-            Creative Tim
-          </a>
+          <img type="image/svg+xml" src={logo} alt="react-logo" height="60px" />
         </div>
 
         <div className="sidebar-wrapper" ref="sidebar">
@@ -168,7 +155,7 @@ class Sidebar extends React.Component {
                 }
               >
                 <span>
-                  Chet Faker
+                  John Smith
                   <b className="caret" />
                 </span>
               </a>

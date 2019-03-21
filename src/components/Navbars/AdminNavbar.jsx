@@ -108,7 +108,6 @@ class AdminNavbar extends React.Component {
               </div>
               <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
                 <span className="d-none d-md-block">
-                  <img type="image/svg+xml" src="https://firebasestorage.googleapis.com/v0/b/guesthouse-1f439.appspot.com/o/GuestHouseLogo.svg?alt=media&token=ca877e4a-8403-4bc0-9653-7e44a45a7ba5" height="30px"/>
                 </span>
                 <span className="d-block d-md-none">PD PRO React</span>
               </NavbarBrand>

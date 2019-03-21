@@ -1,7 +1,7 @@
 {
-  "name": "paper-dashboard-pro-react",
+  "name": "guesthouse",
   "version": "1.0.0",
-  "description": "Premium Bootstrap 4 Paper UI Design",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -23,12 +23,8 @@
     "bootstrap4",
     "reactstrap"
   ],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com)",
-  "license": "Creative Tim",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/paper-dashboard-pro-react/issues"
-  },
-  "homepage": "https://github.com/creativetimofficial/paper-dashboard-pro-react#readme",
+  "author": "",
+  "license": "",
   "dependencies": {
     "@types/googlemaps": "3.30.16",
     "@types/markerclustererplus": "2.1.33",

@@ -212,13 +212,13 @@ const routes = [
   //       component: GoogleMaps,
   //       layout: "/admin"
   //     },
-      {
-        path: "/full-screen-map",
-        name: "Invenory Location",
-        icon: "nc-icon nc-pin-3",
-        component: FullScreenMap,
-        layout: "/admin"
-      },
+      // {
+      //   path: "/full-screen-map",
+      //   name: "Invenory Location",
+      //   icon: "nc-icon nc-pin-3",
+      //   component: FullScreenMap,
+      //   layout: "/admin"
+      // },
       // {
       //   path: "/vector-map",
       //   name: "Vector Map",
