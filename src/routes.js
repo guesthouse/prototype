@@ -24,6 +24,7 @@ import ValidationForms from "views/forms/ValidationForms.jsx";
 import VectorMap from "views/maps/VectorMap.jsx";
 import Widgets from "views/Widgets.jsx";
 import Wizard from "views/forms/Wizard.jsx";
+import BuildProfile from "views/pages/BuildProfile.jsx";
 
 const routes = [
   {
@@ -161,12 +162,11 @@ const routes = [
   //       layout: "/admin"
   //     },
       {
-        path: "/wizard",
+        path: "/buildProfile",
         name: "Build Profile",
         icon: "nc-icon nc-ruler-pencil",
 
         component: Wizard,
-        layout: "/admin"
       },
   //   ]
   // },
@@ -242,13 +242,13 @@ const routes = [
   //   component: Charts,
   //   layout: "/admin"
   // },
-  {
-    path: "/calendar",
-    name: "Calendar",
-    icon: "nc-icon nc-calendar-60",
-    component: Calendar,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/calendar",
+  //   name: "Calendar",
+  //   icon: "nc-icon nc-calendar-60",
+  //   component: Calendar,
+  //   layout: "/admin"
+  // }
 ];
 
 export default routes;

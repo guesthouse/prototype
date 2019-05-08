@@ -1,6 +1,5 @@
 import React from "react";
 import classnames from "classnames";
-// reactstrap components
 import {
   Input,
   InputGroupAddon,
@@ -9,10 +8,15 @@ import {
   Row,
   Col
 } from "reactstrap";
-
-// core components
 import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
 
+// Name (first and last) 	Text Field 
+// Business Name	Text Field 
+// Email	Email, validated
+// Phone Number	Phone # validated
+// Type of Homes	Location 
+// Average Price Point 	Number, validated
+// City They Sell In	Location 
 class Wizard extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +25,8 @@ class Wizard extends React.Component {
       lastname: "",
       email: "",
       phone: "",
-      url: "",
+      propertyType: "",
+      averagePrice: "",
       location: "",
       businessName: "",
 
@@ -29,76 +34,15 @@ class Wizard extends React.Component {
       lastnameState: "",
       emailState: "",
       phoneState: "",
-      urlState: "",
+      propertyTypeState: "",
+      averagePriceState: "",
       locationState: "",
       businessNameState: ""
     };
   }
-  // function that returns true if value is email, false otherwise
-  verifyEmail = value => {
-    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRex.test(value)) {
-      return true;
-    }
-    return false;
-  };
-  // function that verifies if a string has a given length or not
-  verifyLength = (value, length) => {
-    if (value.length >= length) {
-      return true;
-    }
-    return false;
-  };
-  change = (event, stateName, type, stateNameEqualTo, maxValue) => {
-    switch (type) {
-      case "email":
-        if (this.verifyEmail(event.target.value)) {
-          this.setState({ [stateName + "State"]: "has-success" });
-        } else {
-          this.setState({ [stateName + "State"]: "has-danger" });
-        }
-        break;
-      case "length":
-        if (this.verifyLength(event.target.value, stateNameEqualTo)) {
-          this.setState({ [stateName + "State"]: "has-success" });
-        } else {
-          this.setState({ [stateName + "State"]: "has-danger" });
-        }
-        break;
-      default:
-        break;
-    }
-    this.setState({ [stateName]: event.target.value });
-  };
-  isValidated = () => {
-    if (
-      this.state.firstnameState === "has-success" &&
-      this.state.lastnameState === "has-success" &&
-      this.state.businessNameState === "has-success" &&
-      this.state.urlState === "has-success" &&
-      this.state.locationState === "has-success" && 
-      this.state.phoneState === "has-success"
-    ) {
-      return true;
-    } else {
-      if (this.state.firstnameState !== "has-success") {
-        this.setState({ firstnameState: "has-danger" });
-      }
-      if (this.state.lastnameState !== "has-success") {
-        this.setState({ lastnameState: "has-danger" });
-      }
-      if (this.state.emailState !== "has-success") {
-        this.setState({ emailState: "has-danger" });
-      }
-      return false;
-    }
-  };
   render() {
     return (
       <>
-        <h5 className="info-text">
-          Let's start with the basic information
-        </h5>
         <Row className="justify-content-center">
           <Col sm="5">
           <PictureUpload />
@@ -114,7 +58,7 @@ class Wizard extends React.Component {
                 </InputGroupAddon>
                 <Input
                   name="firstname"
-                  placeholder="First Name (required)"
+                  placeholder="First Name"
                   type="text"
                   onChange={e => this.change(e, "firstname", "length", 1)}
                   onFocus={e => this.setState({ firstnameFocus: true })}
@@ -134,9 +78,10 @@ class Wizard extends React.Component {
                   <i className="nc-icon nc-circle-10" />
                 </InputGroupText>
               </InputGroupAddon>
+
               <Input
                 name="lastname"
-                placeholder="Last Name (required)"
+                placeholder="Last Name"
                 type="text"
                 onChange={e => this.change(e, "lastname", "length", 1)}
                 onFocus={e => this.setState({ lastnameFocus: true })}
@@ -146,10 +91,8 @@ class Wizard extends React.Component {
                 <label className="error">This field is required.</label>
               ) : null}
             </InputGroup>
-          </Col>
-    
-          <Col  sm="5">
-          <InputGroup
+
+               <InputGroup
               className={classnames(this.state.emailState, {
                 "input-group-focus": this.state.emailFocus
               })}
@@ -161,7 +104,7 @@ class Wizard extends React.Component {
               </InputGroupAddon>
               <Input
                 name="email"
-                placeholder="Email (required)"
+                placeholder="Email"
                 type="text"
                 onChange={e => this.change(e, "email", "length", 1)}
                 onFocus={e => this.setState({ emailFocus: true })}
@@ -171,10 +114,13 @@ class Wizard extends React.Component {
                 <label className="error">This field is required.</label>
               ) : null}
             </InputGroup>
+          </Col>
+    
+          <Col  sm="5">
             <InputGroup
               className={classnames(this.state.businessNameState, {
                 "input-group-focus": this.state.businessNameFocus
-              })}
+              }, "mt-5")}
             >
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
@@ -183,7 +129,7 @@ class Wizard extends React.Component {
               </InputGroupAddon>
               <Input
                 name="businessNamme"
-                placeholder="Business Name (required)"
+                placeholder="Business Name"
                 type="text"
                 onChange={e => this.change(e, "businessName", "length", 1)}
                 onFocus={e => this.setState({ businessNameFocus: true })}
@@ -205,7 +151,7 @@ class Wizard extends React.Component {
               </InputGroupAddon>
               <Input
                 name="phone"
-                placeholder="Phone Number (required)"
+                placeholder="Phone Number"
                 type="text"
                 onChange={e => this.change(e, "phone", "length", 1)}
                 onFocus={e => this.setState({ phoneFocus: true })}
@@ -215,9 +161,10 @@ class Wizard extends React.Component {
                 <label className="error">This field is required.</label>
               ) : null}
             </InputGroup>
+
             <InputGroup
-              className={classnames(this.state.urlState, {
-                "input-group-focus": this.state.urlFocus
+              className={classnames(this.state.propertyTypeState, {
+                "input-group-focus": this.state.propertyTypeFocus
               })}
             >
               <InputGroupAddon addonType="prepend">
@@ -226,17 +173,41 @@ class Wizard extends React.Component {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                name="url"
-                placeholder="URL (required)"
+                name="propertyType"
+                placeholder="Property Type"
                 type="text"
-                onChange={e => this.change(e, "url", "length", 1)}
-                onFocus={e => this.setState({ urlFocus: true })}
-                onBlur={e => this.setState({ urlFocus: false })}
+                onChange={e => this.change(e, "propertyType", "length", 1)}
+                onFocus={e => this.setState({ propertyTypeFocus: true })}
+                onBlur={e => this.setState({ propertyTypeFocus: false })}
               />
-              {this.state.url === "has-danger" ? (
+              {this.state.propertyType === "has-danger" ? (
                 <label className="error">This field is required.</label>
               ) : null}
             </InputGroup>
+
+            <InputGroup
+              className={classnames(this.state.averagePriceState, {
+                "input-group-focus": this.state.averagePriceFocus
+              })}
+            >
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i className="nc-icon nc-circle-10" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="averagePrice"
+                placeholder="Average Price Point"
+                type="text"
+                onChange={e => this.change(e, "averagePrice", "length", 1)}
+                onFocus={e => this.setState({ averagePriceFocus: true })}
+                onBlur={e => this.setState({ averagePriceFocus: false })}
+              />
+              {this.state.averagePrice === "has-danger" ? (
+                <label className="error">This field is required.</label>
+              ) : null}
+            </InputGroup>
+            
             <InputGroup
               className={classnames(this.state.locationState, {
                 "input-group-focus": this.state.locationFocus
@@ -249,7 +220,7 @@ class Wizard extends React.Component {
               </InputGroupAddon>
               <Input
                 name="location"
-                placeholder="Location (required)"
+                placeholder="Location"
                 type="text"
                 onChange={e => this.change(e, "location", "length", 1)}
                 onFocus={e => this.setState({ locationFocus: true })}

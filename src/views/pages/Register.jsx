@@ -1,5 +1,7 @@
-import React from "react";
-// reactstrap components
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import {Link} from 'react-router-dom';
+
 import {
   Button,
   Card,
@@ -20,6 +22,55 @@ import {
 } from "reactstrap";
 
 class Register extends React.Component {
+  constructor(){
+    super()
+    
+    this.state={
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      error: false
+    }
+
+    this.loginUser = this.loginUser.bind(this)
+    this.handleText = this.handleText.bind(this)
+  }
+
+  loginUser() {
+    const email = this.state.email
+    const pass = this.state.password
+    const auth = firebase.auth();
+    const db = firebase.firestore()
+
+    const {history} = this.props
+    auth.createUserWithEmailAndPassword(email, pass).then((response)=>{
+      console.log(response)
+      db.collection('users').doc(response.user.email).set({
+        user_id: response.user.uid,
+        email: response.user.email,
+        firstname: this.state.firstname,
+        lastname: this.state.lastname
+      }).then(function(docRef) {
+          history.push('/buildprofile')
+      }).catch(function(error) {
+          console.error("Error adding document: ", error);
+      });
+
+    }).catch(function(error){
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorMessage,'failed sooner than i thought')
+    })
+  }
+
+  handleText(event){
+    event.preventDefault()
+    this.setState({
+        [event.target.id]: event.target.value
+    })
+  }
+
   componentDidMount() {
     document.body.classList.toggle("register-page");
   }
@@ -90,7 +141,7 @@ class Register extends React.Component {
                           <i className="nc-icon nc-single-02" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="First Name..." type="text" />
+                      <Input placeholder="First Name..." type="text" id='firstname' onChange={this.handleText} />
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -98,7 +149,7 @@ class Register extends React.Component {
                           <i className="nc-icon nc-circle-10" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Last Name..." type="text" />
+                      <Input placeholder="Last Name..." type="text" id='lastname' onChange={this.handleText} />
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -106,7 +157,7 @@ class Register extends React.Component {
                           <i className="nc-icon nc-email-85" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Email..." type="email" />
+                      <Input placeholder="Email..." type="email" id='email' onChange={this.handleText} />
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -114,7 +165,7 @@ class Register extends React.Component {
                           <i className="nc-icon nc-touch-id" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="passsword..." type="password" />
+                      <Input placeholder="passsword..." type="password" id='password' onChange={this.handleText} />
                     </InputGroup>
                     <FormGroup check className="text-left">
                       <Label check>
@@ -134,7 +185,7 @@ class Register extends React.Component {
                     className="btn-round"
                     color="info"
                     href="#pablo"
-                    onClick={e => e.preventDefault()}
+                    onClick={this.loginUser}
                   >
                     Get Started
                   </Button>

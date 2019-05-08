@@ -80,17 +80,7 @@ class AdminNavbar extends React.Component {
         >
           <Container fluid>
             <div className="navbar-wrapper">
-              <div className="navbar-minimize">
-                <Button
-                  className="btn-icon btn-round"
-                  color="default"
-                  id="minimizeSidebar"
-                  onClick={this.props.handleMiniClick}
-                >
-                  <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
-                  <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" />
-                </Button>
-              </div>
+
               <div
                 className={classnames("navbar-toggle", {
                   toggled: this.state.sidebarOpen
