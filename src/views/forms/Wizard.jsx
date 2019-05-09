@@ -82,8 +82,9 @@ class Wizard extends React.Component {
     };
   };
 
-  finishButtonClick(){
-    window.location = '/admin/dashboard'
+  finishButtonClick(allStates){
+    console.log(allStates)
+    // window.location = '/admin/dashboard'
   }
 
 

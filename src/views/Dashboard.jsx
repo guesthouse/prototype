@@ -49,14 +49,15 @@ var mapData = {
 };
 
 class Dashboard extends React.Component {
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-    } else {
-      // No user is signed in.
-      history.push('/register')
-    }
-  });
+
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     // User is signed in.
+  //   } else {
+  //     // No user is signed in.
+  //     history.push('/register')
+  //   }
+  // });
   render() {
     return (
       <>

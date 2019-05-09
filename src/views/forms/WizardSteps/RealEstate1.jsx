@@ -10,13 +10,6 @@ import {
 } from "reactstrap";
 import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
 
-// Name (first and last) 	Text Field 
-// Business Name	Text Field 
-// Email	Email, validated
-// Phone Number	Phone # validated
-// Type of Homes	Location 
-// Average Price Point 	Number, validated
-// City They Sell In	Location 
 class Wizard extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +33,51 @@ class Wizard extends React.Component {
       businessNameState: ""
     };
   }
+
+  change = (event, stateName, type, stateNameEqualTo, maxValue) => {
+    switch (type) {
+      case "email":
+        if (this.verifyEmail(event.target.value)) {
+          this.setState({ [stateName + "State"]: "has-success" });
+        } else {
+          this.setState({ [stateName + "State"]: "has-danger" });
+        }
+        break;
+      case "length":
+        if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+          this.setState({ [stateName + "State"]: "has-success" });
+        } else {
+          this.setState({ [stateName + "State"]: "has-danger" });
+        }
+        break;
+      default:
+        break;
+    }
+    this.setState({ [stateName]: event.target.value });
+  };
+  // isValidated = () => {
+  //   if (
+  //     this.state.firstnameState === "has-success" &&
+  //     this.state.lastnameState === "has-success" &&
+  //     this.state.businessNameState === "has-success" &&
+  //     this.state.urlState === "has-success" &&
+  //     this.state.locationState === "has-success" && 
+  //     this.state.phoneState === "has-success"
+  //   ) {
+  //     return true;
+  //   } else {
+  //     if (this.state.firstnameState !== "has-success") {
+  //       this.setState({ firstnameState: "has-danger" });
+  //     }
+  //     if (this.state.lastnameState !== "has-success") {
+  //       this.setState({ lastnameState: "has-danger" });
+  //     }
+  //     if (this.state.emailState !== "has-success") {
+  //       this.setState({ emailState: "has-danger" });
+  //     }
+  //     return false;
+  //   }
+  // };
   render() {
     return (
       <>
@@ -60,7 +98,7 @@ class Wizard extends React.Component {
                   name="firstname"
                   placeholder="First Name"
                   type="text"
-                  onChange={e => this.change(e, "firstname", "length", 1)}
+                  onChange={e => this.change(e, "firstname")}
                   onFocus={e => this.setState({ firstnameFocus: true })}
                   onBlur={e => this.setState({ firstnameFocus: false })}
                 />
@@ -83,7 +121,7 @@ class Wizard extends React.Component {
                 name="lastname"
                 placeholder="Last Name"
                 type="text"
-                onChange={e => this.change(e, "lastname", "length", 1)}
+                onChange={e => this.change(e, "lastname")}
                 onFocus={e => this.setState({ lastnameFocus: true })}
                 onBlur={e => this.setState({ lastnameFocus: false })}
               />
@@ -106,7 +144,7 @@ class Wizard extends React.Component {
                 name="email"
                 placeholder="Email"
                 type="text"
-                onChange={e => this.change(e, "email", "length", 1)}
+                onChange={e => this.change(e, "email",)}
                 onFocus={e => this.setState({ emailFocus: true })}
                 onBlur={e => this.setState({ emailFocus: false })}
               />
@@ -131,7 +169,7 @@ class Wizard extends React.Component {
                 name="businessNamme"
                 placeholder="Business Name"
                 type="text"
-                onChange={e => this.change(e, "businessName", "length", 1)}
+                onChange={e => this.change(e, "businessName")}
                 onFocus={e => this.setState({ businessNameFocus: true })}
                 onBlur={e => this.setState({ businessNameFocus: false })}
               />
@@ -153,7 +191,7 @@ class Wizard extends React.Component {
                 name="phone"
                 placeholder="Phone Number"
                 type="text"
-                onChange={e => this.change(e, "phone", "length", 1)}
+                onChange={e => this.change(e, "phone")}
                 onFocus={e => this.setState({ phoneFocus: true })}
                 onBlur={e => this.setState({ phoneFocus: false })}
               />
@@ -176,7 +214,7 @@ class Wizard extends React.Component {
                 name="propertyType"
                 placeholder="Property Type"
                 type="text"
-                onChange={e => this.change(e, "propertyType", "length", 1)}
+                onChange={e => this.change(e, "propertyType")}
                 onFocus={e => this.setState({ propertyTypeFocus: true })}
                 onBlur={e => this.setState({ propertyTypeFocus: false })}
               />
@@ -199,7 +237,7 @@ class Wizard extends React.Component {
                 name="averagePrice"
                 placeholder="Average Price Point"
                 type="text"
-                onChange={e => this.change(e, "averagePrice", "length", 1)}
+                onChange={e => this.change(e, "averagePrice")}
                 onFocus={e => this.setState({ averagePriceFocus: true })}
                 onBlur={e => this.setState({ averagePriceFocus: false })}
               />
@@ -222,7 +260,7 @@ class Wizard extends React.Component {
                 name="location"
                 placeholder="Location"
                 type="text"
-                onChange={e => this.change(e, "location", "length", 1)}
+                onChange={e => this.change(e, "location")}
                 onFocus={e => this.setState({ locationFocus: true })}
                 onBlur={e => this.setState({ locationFocus: false })}
               />
