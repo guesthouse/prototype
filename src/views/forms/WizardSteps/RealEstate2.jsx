@@ -17,6 +17,7 @@ class Wizard extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.change = this.change.bind(this);
     this.toggleBed = this.toggleBed.bind(this);
     this.toggleBath = this.toggleBath.bind(this);
     this.setProperty = this.setProperty.bind(this);
@@ -84,6 +85,28 @@ class Wizard extends React.Component {
     })
   }
 
+  change = (event, stateName, type, stateNameEqualTo, maxValue) => {
+    switch (type) {
+      case "email":
+        if (this.verifyEmail(event.target.value)) {
+          this.setState({ [stateName + "State"]: "has-success" });
+        } else {
+          this.setState({ [stateName + "State"]: "has-danger" });
+        }
+        break;
+      case "length":
+        if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+          this.setState({ [stateName + "State"]: "has-success" });
+        } else {
+          this.setState({ [stateName + "State"]: "has-danger" });
+        }
+        break;
+      default:
+        break;
+    }
+    this.setState({ [stateName]: event.target.value });
+  };
+
   render() {
     return (
       <>
@@ -104,7 +127,7 @@ class Wizard extends React.Component {
                   name="address"
                   placeholder="Property Address"
                   type="text"
-                  onChange={e => this.change(e, "address", "length", 1)}
+                  onChange={e => this.change(e, "address")}
                   onFocus={e => this.setState({ addressFocus: true })}
                   onBlur={e => this.setState({ addressFocus: false })}
               />
@@ -127,7 +150,7 @@ class Wizard extends React.Component {
                 name="url"
                 placeholder="Listing/Property URL"
                 type="text"
-                onChange={e => this.change(e, "url", "length", 1)}
+                onChange={e => this.change(e, "url")}
                 onFocus={e => this.setState({ urlFocus: true })}
                 onBlur={e => this.setState({ urlFocus: false })}
               />
@@ -150,7 +173,7 @@ class Wizard extends React.Component {
                 name="description"
                 placeholder="Describe the home & finishes"
                 type="textarea"
-                onChange={e => this.change(e, "description", "length", 1)}
+                onChange={e => this.change(e, "description")}
                 onFocus={e => this.setState({ descriptionFocus: true })}
                 onBlur={e => this.setState({ descriptionFocus: false })}
               />
@@ -173,7 +196,7 @@ class Wizard extends React.Component {
                 name=" dateTimeForStage"
                 placeholder=" Date/Time of Staging)"
                 type="text"
-                onChange={e => this.change(e, " dateTimeForStage", "length", 1)}
+                onChange={e => this.change(e, " dateTimeForStage")}
                 onFocus={e => this.setState({  dateTimeForStageFocus: true })}
                 onBlur={e => this.setState({  dateTimeForStageFocus: false })}
               />

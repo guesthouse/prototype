@@ -1,5 +1,5 @@
 import React from "react";
-
+import firebase from 'firebase';
 // reactstrap components
 import {
   Button,
@@ -20,12 +20,41 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
+  constructor(){
+    super()
+
+    this.state = {
+      email: '',
+      password: ''
+    }
+    this.change = this.change.bind(this);
+  }
+
+  change = (event, stateName) => {
+    this.setState({ [stateName]: event.target.value });
+  };
+
+  loginUser = () => {
+    const email = this.state.email
+    const pass = this.state.password
+    const auth = firebase.auth();
+
+    const {history} = this.props
+    auth.signInWithEmailAndPassword(email, pass).then(()=>{
+      history.push('/admin/property')
+    })
+    .catch(
+      console.log('unable to login')
+    );
+}
+
   componentDidMount() {
     document.body.classList.toggle("login-page");
   }
   componentWillUnmount() {
     document.body.classList.toggle("login-page");
   }
+
   render() {
     return (
       <div className="login-page">
@@ -46,7 +75,10 @@ class Login extends React.Component {
                           <i className="nc-icon nc-single-02" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="First Name..." type="text" />
+                      <Input 
+                        placeholder="Email" 
+                        type="text" 
+                        onChange={e => this.change(e, "email")}/>
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -58,22 +90,9 @@ class Login extends React.Component {
                         placeholder="Password"
                         type="password"
                         autoComplete="off"
+                        onChange={e => this.change(e, "password")}
                       />
-                    </InputGroup>
-                    <br />
-                    <FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input
-                            defaultChecked
-                            defaultValue=""
-                            type="checkbox"
-                          />
-                          <span className="form-check-sign" />
-                          Subscribe to newsletter
-                        </Label>
-                      </FormGroup>
-                    </FormGroup>
+                    </InputGroup>                    
                   </CardBody>
                   <CardFooter>
                     <Button
@@ -81,7 +100,7 @@ class Login extends React.Component {
                       className="btn-round mb-3"
                       color="warning"
                       href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      onClick={e => this.loginUser()}
                     >
                       Get Started
                     </Button>

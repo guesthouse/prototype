@@ -46,7 +46,7 @@ class Register extends React.Component {
     const {history} = this.props
     auth.createUserWithEmailAndPassword(email, pass).then((response)=>{
       console.log(response)
-      db.collection('users').doc(response.user.email).set({
+      db.collection('users').doc(response.user.uid).set({
         user_id: response.user.uid,
         email: response.user.email,
         firstname: this.state.firstname,

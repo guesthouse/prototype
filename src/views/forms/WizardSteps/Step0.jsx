@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import firebase from 'firebase';
 // reactstrap components
 import {
   Row,
@@ -35,6 +36,23 @@ class Wizard extends React.Component {
     this.setState({
       role: newRole
     })
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // console.log(user)
+        const db = firebase.firestore();
+        let accountRef = db.collection('users').doc(user.email)
+        accountRef.get().then( doc => {
+          let signedIn = doc.data();
+          // console.log(signedIn)
+          // setUserRole(signedIn);
+        // User is signed in.
+        });
+      } else {
+        console.log('this hsit got hit')
+      }
+    });
   }
   render() {
     return (

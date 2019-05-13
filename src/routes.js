@@ -63,7 +63,15 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
     component: FurnitureDetail,
     layout: "/admin"
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-book-bookmark",
+    component: Login,
+    layout: '/auth'
   }
+
 ]
 
 

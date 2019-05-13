@@ -21,19 +21,33 @@ class Property extends React.Component {
     super()
 
     this.state = {
-      properties: [1, 1 , 1, 1, 1, 1 ,1, 1],
+      properties: [],
       statusColor: 'available'
     }
   }
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const db = firebase.firestore();
-        let accountRef = db.collection('users').doc(user.email)
-        accountRef.get().then( doc => {
-    
-        // User is signed in.
+        const propertyList = []
+        db.collection('properties').where("account_id", "==", user.uid ).get().then( snap => {
+          snap.forEach((doc)=>{
+            console.log(doc.data())
+            let property = {id: doc.id, data: doc.data()}
+            propertyList.push(property);
+          });
+          this.setState({
+            properties: propertyList
+          });
         });
+        db.collection('users').doc(user.uid ).get().then( doc => {
+          let user = doc.data();
+          let fullname = user.firstname + " " + user.lastname
+          this.setState({
+            fullname: fullname
+          })
+        });
+        console.log(this.state.properties)
       } else {
         // No user is signed in.
       }
@@ -46,7 +60,7 @@ class Property extends React.Component {
         <div className='flex-row'>
           {(this.state.properties).map((e,i)=>{
             return (
-              <Card className="card-user-flex" md='4'>
+              <Card className="card-user-flex" md='4' key={i}>
                 <div className="image">
                   <img
                     alt="..."
@@ -59,12 +73,12 @@ class Property extends React.Component {
                         <Row>
                           <Col className="ml-auto">
                             <h5>
-                              Furniture Type 
+                              {e.data.address}
                             </h5>
                           </Col>
                           <Col className="mr-auto" >
                             <h5 className={this.state.statusColor}>
-                              Status
+                              {e.data.status}
                             </h5>
                           </Col>
                         </Row>
@@ -72,7 +86,7 @@ class Property extends React.Component {
                         <Row>
                           <Col></Col>
                           <Col>
-                            <h5>Agent Name</h5> 
+                            <h5>{this.state.fullname}</h5> 
                           </Col>
                         </Row>
                       </div>

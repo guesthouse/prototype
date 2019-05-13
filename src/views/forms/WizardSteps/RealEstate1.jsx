@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import firebase from 'firebase';
 import {
   Input,
   InputGroupAddon,
@@ -30,8 +31,13 @@ class Wizard extends React.Component {
       propertyTypeState: "",
       averagePriceState: "",
       locationState: "",
-      businessNameState: ""
+      businessNameState: "",
+      
+      user: {}
     };
+
+    this.change = this.change.bind(this);
+    this.setUser = this.setUser.bind(this);
   }
 
   change = (event, stateName, type, stateNameEqualTo, maxValue) => {
@@ -55,6 +61,31 @@ class Wizard extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   };
+
+  setUser(activeUser){
+    this.setState({
+      currentUser: activeUser
+    })
+  }
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged( (user) => {
+      if (user) {
+        var currentUser = {}
+        const db = firebase.firestore();
+        db.collection('users').doc(user.uid).get().then( (doc) => {
+          this.setState({
+            firstname: doc.data().firstname,
+            lastname: doc.data().firstname,
+            email: doc.data().email,
+            user: doc.data()})
+        });
+      } else {
+        
+      }
+    });
+  }
+
   // isValidated = () => {
   //   if (
   //     this.state.firstnameState === "has-success" &&
@@ -98,6 +129,7 @@ class Wizard extends React.Component {
                   name="firstname"
                   placeholder="First Name"
                   type="text"
+                  value={this.state.user.firstname}
                   onChange={e => this.change(e, "firstname")}
                   onFocus={e => this.setState({ firstnameFocus: true })}
                   onBlur={e => this.setState({ firstnameFocus: false })}
@@ -121,6 +153,7 @@ class Wizard extends React.Component {
                 name="lastname"
                 placeholder="Last Name"
                 type="text"
+                value={this.state.user.lastname}
                 onChange={e => this.change(e, "lastname")}
                 onFocus={e => this.setState({ lastnameFocus: true })}
                 onBlur={e => this.setState({ lastnameFocus: false })}
@@ -144,7 +177,8 @@ class Wizard extends React.Component {
                 name="email"
                 placeholder="Email"
                 type="text"
-                onChange={e => this.change(e, "email",)}
+                value={this.state.user.email}
+                onChange={e => this.change(e, "email")}
                 onFocus={e => this.setState({ emailFocus: true })}
                 onBlur={e => this.setState({ emailFocus: false })}
               />

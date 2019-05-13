@@ -1,5 +1,6 @@
 import React from "react";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import firebase from 'firebase';
 // react plugin used to create a form with multiple steps
 import ReactWizard from "react-bootstrap-wizard";
 
@@ -55,6 +56,8 @@ class Wizard extends React.Component {
   constructor(props){
     super(props)
     this.selectUserRole = this.selectUserRole.bind(this)
+    this.storeAgentDetails = this.storeAgentDetails.bind(this)
+    this.storeMakerDetails = this.storeMakerDetails.bind(this)
     this.state = {
       selectedSteps:  [
         {
@@ -82,11 +85,130 @@ class Wizard extends React.Component {
     };
   };
 
-  finishButtonClick(allStates){
+  storeAgentDetails(allStates) {
+    const db = firebase.firestore();
     console.log(allStates)
-    // window.location = '/admin/dashboard'
-  }
+    console.log(allStates["Real Estate Info"])
+    let user_id =  allStates["Real Estate Info"].user.user_id;
 
+    db.collection('users').doc(user_id).update({
+      firstname: allStates["Real Estate Info"].firstname,
+      lastname: allStates["Real Estate Info"].lastname,
+      email: allStates["Real Estate Info"].email,
+      businessName: allStates["Real Estate Info"].businessName,
+      averagePrice: allStates["Real Estate Info"].firstname,
+      location: allStates["Real Estate Info"].location,
+      phone: allStates["Real Estate Info"].phone,
+      propertyType: allStates["Real Estate Info"].propertyType,
+      userRole: allStates["Select Role"].role
+    }).then( (docRef) => {
+      db.collection('properties').doc().set({ 
+        address: allStates["Real Estate Request"].address,
+        bathNumber: allStates["Real Estate Request"].bathNumber,
+        bedNumber: allStates["Real Estate Request"].bedNumber,
+        stageDate: allStates["Real Estate Request"].dateTimeForStage,
+        description: allStates["Real Estate Request"].description,
+        listingPrice: allStates["Real Estate Request"].listingPrice,
+        propertyType: allStates["Real Estate Request"].typeOfProperty,
+        propertyURL: allStates["Real Estate Request"].url,
+      }).then((res) => {
+        window.location = '/property'
+      }).catch((error) => {
+        console.error("Error adding document: ", error);
+      })
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+  };
+
+  storeMakerDetails(allStates){
+    const db = firebase.firestore();
+    console.log(allStates)
+    console.log(allStates["Maker Info"])
+    let user_id =  allStates["Maker Info"].user.user_id;
+
+    db.collection('users').doc(user_id).update({
+      firstname: allStates["Maker Info"].firstname,
+      lastname: allStates["Maker Info"].lastname,
+      email: allStates["Maker Info"].email,
+      businessName: allStates["Maker Info"].businessName,
+      averagePrice: allStates["Maker Info"].firstname,
+      location: allStates["Maker Info"].location,
+      phone: allStates["Maker Info"].phone,
+      propertyType: allStates["Maker Info"].propertyType,
+      userRole: allStates["Select Role"].role
+    }).then( (docRef) => {
+      db.collection('properties').doc().set({ 
+        address: allStates["What You Make"].address,
+        bathNumber: allStates["What You Make"].bathNumber,
+        bedNumber: allStates["What You Make"].bedNumber,
+        stageDate: allStates["What You Make"].dateTimeForStage,
+        description: allStates["What You Make"].description,
+        listingPrice: allStates["What You Make"].listingPrice,
+        propertyType: allStates["What You Make"].typeOfProperty,
+        propertyURL: allStates["What You Make"].url,
+      }).then((res) => {
+        window.location = '/property'
+      }).catch((error) => {
+        console.error("Error adding document: ", error);
+      })
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+  };
+
+  finishButtonClick(allStates){
+    const db = firebase.firestore();
+    const user_id =  allStates["Real Estate Info"].user.user_id;
+    if (allStates["Select Role"].role === "Real Estate Agent"){
+      db.collection('users').doc(user_id).update({
+        firstname: allStates["Real Estate Info"].firstname,
+        lastname: allStates["Real Estate Info"].lastname,
+        email: allStates["Real Estate Info"].email,
+        businessName: allStates["Real Estate Info"].businessName,
+        averagePrice: allStates["Real Estate Info"].firstname,
+        location: allStates["Real Estate Info"].location,
+        phone: allStates["Real Estate Info"].phone,
+        propertyType: allStates["Real Estate Info"].propertyType,
+        userRole: allStates["Select Role"].role
+      }).then( (docRef) => {
+        db.collection('properties').doc().set({ 
+          account_id: user_id,
+          address: allStates["Real Estate Request"].address,
+          bathNumber: allStates["Real Estate Request"].bathNumber,
+          bedNumber: allStates["Real Estate Request"].bedNumber,
+          stageDate: allStates["Real Estate Request"].dateTimeForStage,
+          description: allStates["Real Estate Request"].description,
+          listingPrice: allStates["Real Estate Request"].listingPrice,
+          propertyType: allStates["Real Estate Request"].typeOfProperty,
+          propertyURL: allStates["Real Estate Request"].url,
+          status: 'requested'
+        }).then((res) => {
+          window.location = '/admin/property'
+        }).catch((error) => {
+          console.error("Error adding document: ", error);
+        })
+      }).catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+    }else if (allStates["Select Role"].role === "Maker"){
+      db.collection('users').doc(user_id).update({
+        firstname: allStates["Maker Info"].firstname,
+        lastname: allStates["Maker Info"].lastname,
+        email: allStates["Maker Info"].email,
+        businessName: allStates["Maker Info"].businessName,
+        averagePrice: allStates["Maker Info"].firstname,
+        location: allStates["Maker Info"].location,
+        phone: allStates["Maker Info"].phone,
+        propertyType: allStates["Maker Info"].propertyType,
+        userRole: allStates["Select Role"].role
+      }).then( (docRef) => {
+        window.location = '/admin/furniture'
+      }).catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+    }    
+  }
 
   render() {
     return (

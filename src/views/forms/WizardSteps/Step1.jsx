@@ -116,7 +116,7 @@ class Wizard extends React.Component {
                   name="firstname"
                   placeholder="First Name (required)"
                   type="text"
-                  onChange={e => this.change(e, "firstname", "length", 1)}
+                  onChange={e => this.change(e, "firstname")}
                   onFocus={e => this.setState({ firstnameFocus: true })}
                   onBlur={e => this.setState({ firstnameFocus: false })}
                 />
@@ -138,7 +138,7 @@ class Wizard extends React.Component {
                 name="lastname"
                 placeholder="Last Name (required)"
                 type="text"
-                onChange={e => this.change(e, "lastname", "length", 1)}
+                onChange={e => this.change(e, "lastname")}
                 onFocus={e => this.setState({ lastnameFocus: true })}
                 onBlur={e => this.setState({ lastnameFocus: false })}
               />
@@ -163,7 +163,7 @@ class Wizard extends React.Component {
                 name="email"
                 placeholder="Email (required)"
                 type="text"
-                onChange={e => this.change(e, "email", "length", 1)}
+                onChange={e => this.change(e, "email")}
                 onFocus={e => this.setState({ emailFocus: true })}
                 onBlur={e => this.setState({ emailFocus: false })}
               />
@@ -185,7 +185,7 @@ class Wizard extends React.Component {
                 name="businessNamme"
                 placeholder="Business Name (required)"
                 type="text"
-                onChange={e => this.change(e, "businessName", "length", 1)}
+                onChange={e => this.change(e, "businessName")}
                 onFocus={e => this.setState({ businessNameFocus: true })}
                 onBlur={e => this.setState({ businessNameFocus: false })}
               />
@@ -207,7 +207,7 @@ class Wizard extends React.Component {
                 name="phone"
                 placeholder="Phone Number (required)"
                 type="text"
-                onChange={e => this.change(e, "phone", "length", 1)}
+                onChange={e => this.change(e, "phone", "length")}
                 onFocus={e => this.setState({ phoneFocus: true })}
                 onBlur={e => this.setState({ phoneFocus: false })}
               />
@@ -229,7 +229,7 @@ class Wizard extends React.Component {
                 name="url"
                 placeholder="URL (required)"
                 type="text"
-                onChange={e => this.change(e, "url", "length", 1)}
+                onChange={e => this.change(e, "url")}
                 onFocus={e => this.setState({ urlFocus: true })}
                 onBlur={e => this.setState({ urlFocus: false })}
               />
@@ -251,7 +251,7 @@ class Wizard extends React.Component {
                 name="location"
                 placeholder="Location (required)"
                 type="text"
-                onChange={e => this.change(e, "location", "length", 1)}
+                onChange={e => this.change(e, "location")}
                 onFocus={e => this.setState({ locationFocus: true })}
                 onBlur={e => this.setState({ locationFocus: false })}
               />

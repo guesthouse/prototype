@@ -1,5 +1,5 @@
 import React from "react";
-
+import firebase from "firebase"
 // reactstrap components
 import {
   Button,
@@ -16,6 +16,29 @@ import {
 } from "reactstrap";
 
 class UserProfile extends React.Component {
+  constructor(){
+    super()
+
+    this.state= {
+      user: {}
+    }
+  }
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const db = firebase.firestore();
+        db.collection('users').doc(user.uid ).get().then( doc => {
+          let currentUser = doc.data();
+          this.setState({
+            user: currentUser
+          })
+        });
+      } else {
+        // No user is signed in.
+      }
+    });
+  }
   render() {
     return (
       <>
@@ -37,9 +60,8 @@ class UserProfile extends React.Component {
                         className="avatar border-gray"
                         src={require("assets/img/mike.jpg")}
                       />
-                      <h5 className="title">Chet Faker</h5>
+                      <h5 className="title">{this.state.user.firstname} {this.state.user.lastname}</h5>
                     </a>
-                    <p className="description">@chetfaker</p>
                   </div>
 
                 </CardBody>
@@ -53,19 +75,9 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Company (disabled)</label>
                           <Input
-                            defaultValue="Creative Code Inc."
+                            defaultValue={this.state.user.businessName}
                             disabled
                             placeholder="Company"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="3">
-                        <FormGroup>
-                          <label>Username</label>
-                          <Input
-                            defaultValue="michael23"
-                            placeholder="Username"
                             type="text"
                           />
                         </FormGroup>
@@ -75,7 +87,10 @@ class UserProfile extends React.Component {
                           <label htmlFor="exampleInputEmail1">
                             Email address
                           </label>
-                          <Input placeholder="Email" type="email" />
+                          <Input 
+                            defaultValue = {this.state.user.email}
+                            placeholder="Email"
+                            type="email" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -84,7 +99,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue="Chet"
+                            defaultValue={this.state.user.firstname}
                             placeholder="Company"
                             type="text"
                           />
@@ -94,7 +109,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue="Faker"
+                            defaultValue={this.state.user.lastname}
                             placeholder="Last Name"
                             type="text"
                           />
@@ -104,9 +119,9 @@ class UserProfile extends React.Component {
                     <Row>
                       <Col md="12">
                         <FormGroup>
-                          <label>Address</label>
+                          <label>Location</label>
                           <Input
-                            defaultValue="Melbourne, Australia"
+                            defaultValue={this.state.user.location}
                             placeholder="Home Address"
                             type="text"
                           />
@@ -114,44 +129,15 @@ class UserProfile extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="4">
-                        <FormGroup>
-                          <label>City</label>
-                          <Input
-                            defaultValue="Melbourne"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="4">
-                        <FormGroup>
-                          <label>Country</label>
-                          <Input
-                            defaultValue="Australia"
-                            placeholder="Country"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="4">
-                        <FormGroup>
-                          <label>Postal Code</label>
-                          <Input placeholder="ZIP Code" type="number" />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
                       <Col md="12">
                         <FormGroup>
-                          <label>About Me</label>
+                          <label>Additional Information</label>
                           <Input
                             className="textarea"
                             type="textarea"
                             cols="80"
                             rows="4"
-                            defaultValue="Oh so, your weak rhyme You doubt I'll bother,
-                          reading into it"
+                            defaultValue={this.state.user.additionalInfo}
                           />
                         </FormGroup>
                       </Col>
