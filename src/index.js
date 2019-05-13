@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 
 import AuthLayout from "layouts/Auth/Auth.jsx";
 import AdminLayout from "layouts/Admin/Admin.jsx";
-import BuildProfile from 'views/pages/BuildProfile.jsx';
+import BuildProfile from 'views/pages/BuildProfile/BuildProfile.jsx';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss";

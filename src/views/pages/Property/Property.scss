@@ -1,0 +1,16 @@
+.property {
+    margin-top: 100px;
+    padding: 20px;
+    button {
+        // position: absolute;
+        right: 0px;
+        margin-bottom: 40px;
+    }
+    .flex-row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        
+    }
+}

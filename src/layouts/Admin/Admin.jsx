@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from 'firebase'
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
@@ -17,8 +18,15 @@ class Admin extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      sidebarMini: false
+      sidebarMini: false,
+      userRole: ''
     };
+  }
+
+  setUserRole = ( user ) => {
+    if ( user.user_role == 'agent' ){
+      console.log('sup idiots')
+    }
   }
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -26,7 +34,24 @@ class Admin extends React.Component {
       document.documentElement.classList.remove("perfect-scrollbar-off");
       ps = new PerfectScrollbar(this.refs.mainPanel);
     }
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log(user.email)
+        const db = firebase.firestore();
+        let accountRef = db.collection('users').doc(user.email)
+        accountRef.get().then( doc => {
+          let signedIn = doc.data();
+          console.log(signedIn)
+          // setUserRole(signedIn);
+        // User is signed in.
+        });
+      } else {
+        console.log('this hsit got hit')
+      }
+    });
   }
+
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();

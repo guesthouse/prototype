@@ -1,8 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import GuestHouseLogo from '../../assets/img/GuestHouseLogo.svg'
 import {
-  Button,
   Collapse,
   DropdownToggle,
   DropdownMenu,

@@ -167,18 +167,6 @@ class Sidebar extends React.Component {
                       <span className="sidebar-normal">My Profile</span>
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to="/admin/user-profile" activeClassName="">
-                      <span className="sidebar-mini-icon">EP</span>
-                      <span className="sidebar-normal">Edit Profile</span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/admin/user-profile" activeClassName="">
-                      <span className="sidebar-mini-icon">S</span>
-                      <span className="sidebar-normal">Settings</span>
-                    </NavLink>
-                  </li>
                 </ul>
               </Collapse>
             </div>

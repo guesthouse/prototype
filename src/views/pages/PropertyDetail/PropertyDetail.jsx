@@ -1,6 +1,6 @@
 import React from "react";
-import './Furniture.scss';
-import firebase from 'firebase';
+import './PropertyDetail.scss';
+import firebase from 'firebase'
 import {
   Button,
   Card,
@@ -15,16 +15,14 @@ import {
 } from "reactstrap";
 
 
-class Furniture extends React.Component {
+class PropertyDetail extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         const db = firebase.firestore();
         let accountRef = db.collection('users').doc(user.email)
         accountRef.get().then( doc => {
-          let account = doc.data()
-
-
+    
         // User is signed in.
         });
       } else {
@@ -34,19 +32,14 @@ class Furniture extends React.Component {
   }
   render() {
     return (
-      <div className="furniture">
-        <div className='furniture-modal'>
-          <div className='img-container'>
-            <img src=''/> 
-          </div>
-
-          <div className='details-container'>
-            
-          </div>
-        </div>
+      <div className="property">
+        <Card>
+          
+        </Card>
+          
       </div>
     );
   }
 }
 
-export default Furniture;
+export default PropertyDetail;
