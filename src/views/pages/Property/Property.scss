@@ -1,10 +1,9 @@
 .property {
-    margin-top: 100px;
+    margin-top: 50px;
     padding: 20px;
-    button {
-        // position: absolute;
-        right: 0px;
-        margin-bottom: 40px;
+    .zero {
+        margin-top: 100px;
+        text-align: center;
     }
     .flex-row{
         display: flex;

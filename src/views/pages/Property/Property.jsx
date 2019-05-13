@@ -11,6 +11,10 @@ import {
   FormGroup,
   Input,
   Container,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   Col,
   Row
 } from "reactstrap";
@@ -56,7 +60,59 @@ class Property extends React.Component {
   render() {
     return (
       <div className="property"> 
-        <button>Add Property</button>
+        <Col lg="3" md="3" sm={{size: "3", offset: 9}}>
+          <UncontrolledDropdown>
+            <DropdownToggle
+              aria-expanded={false}
+              aria-haspopup={true}
+              caret
+              className="btn-round btn-block"
+              color="primary"
+              data-toggle="dropdown"
+              id="dropdownMenuButton"
+              type="button"
+            >
+              Manage Properties
+            </DropdownToggle>
+            <DropdownMenu
+              aria-labelledby="dropdownMenuButton"
+              right
+            >
+              <DropdownItem
+                href="#pablo"
+                onClick={e => e.preventDefault()}
+              >
+                Properties Overview
+              </DropdownItem>
+              <DropdownItem
+                href="#pablo"
+                onClick={e => e.preventDefault()}
+              >
+                Add Property
+              </DropdownItem>
+              <DropdownItem
+                href="#pablo"
+                onClick={e => e.preventDefault()}
+              >
+                History
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </Col>
+
+        { this.state.properties.length == 0 &&
+          <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
+            <h3 className='zero'>
+              You Currently Do Not Have Any Properties
+            </h3>
+            <Col sm={{size: "6", offset: 4}}>
+              <Button className="btn-round" sm={{size: "6", offset: 4}}color="primary">
+                  + Add Property
+              </Button>
+            </Col>
+          </Col>
+        }
+
         <div className='flex-row'>
           {(this.state.properties).map((e,i)=>{
             return (

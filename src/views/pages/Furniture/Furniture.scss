@@ -1,3 +1,18 @@
-.furniture{
-    width: 100%;
+.furniture {
+    margin-top: 50px;
+    padding: 20px;
+
+    .zero {
+        margin-top: 100px;
+        text-align: center;
+    }
+    .flex-row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        
+    }
+
+
 }
