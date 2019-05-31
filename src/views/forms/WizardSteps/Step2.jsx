@@ -62,7 +62,7 @@ class Wizard extends React.Component {
                   <div className="icon">
                     <i className="nc-icon nc-laptop" />
                   </div>
-                  <h6>Deaks</h6>
+                  <h6>Desks</h6>
                 </div>
               </Col>
               <Col sm="3">

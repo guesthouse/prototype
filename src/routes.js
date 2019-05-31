@@ -31,7 +31,7 @@ const routes = [
   },
   {
     path: "/property",
-    name: "Property",
+    name: "Homes",
     icon: "nc-icon nc-book-bookmark",
     component: Property,
     layout: "/admin"

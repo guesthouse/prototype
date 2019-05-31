@@ -123,8 +123,6 @@ class Wizard extends React.Component {
 
   storeMakerDetails(allStates){
     const db = firebase.firestore();
-    console.log(allStates)
-    console.log(allStates["Maker Info"])
     let user_id =  allStates["Maker Info"].user.user_id;
 
     db.collection('users').doc(user_id).update({
@@ -159,8 +157,8 @@ class Wizard extends React.Component {
 
   finishButtonClick(allStates){
     const db = firebase.firestore();
-    const user_id =  allStates["Real Estate Info"].user.user_id;
     if (allStates["Select Role"].role === "Real Estate Agent"){
+      const user_id =  allStates["Real Estate Info"].user.user_id;
       db.collection('users').doc(user_id).update({
         firstname: allStates["Real Estate Info"].firstname,
         lastname: allStates["Real Estate Info"].lastname,
@@ -192,15 +190,15 @@ class Wizard extends React.Component {
         console.error("Error adding document: ", error);
       });
     }else if (allStates["Select Role"].role === "Maker"){
+      const user_id = allStates["Maker Info"].user.user_id;
       db.collection('users').doc(user_id).update({
         firstname: allStates["Maker Info"].firstname,
         lastname: allStates["Maker Info"].lastname,
         email: allStates["Maker Info"].email,
         businessName: allStates["Maker Info"].businessName,
-        averagePrice: allStates["Maker Info"].firstname,
         location: allStates["Maker Info"].location,
         phone: allStates["Maker Info"].phone,
-        propertyType: allStates["Maker Info"].propertyType,
+        furnitureType: allStates["What You Make"],
         userRole: allStates["Select Role"].role
       }).then( (docRef) => {
         window.location = '/admin/furniture'

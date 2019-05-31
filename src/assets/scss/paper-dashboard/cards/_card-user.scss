@@ -105,3 +105,118 @@
         text-align: center;
     }
 }
+
+.card-details{
+    .image{
+        height: 300px;
+
+      img {
+        border-radius: 12px;
+      }
+    }
+
+    .author{
+        text-align: center;
+        text-transform: none;
+        margin-top: -77px;
+
+        a +  p.description{
+            margin-top: -7px;
+        }
+    }
+
+    .avatar{
+        width: 124px;
+        height: 124px;
+        border: 1px solid $white-color;
+        position: relative;
+    }
+
+    .card-body{
+        // min-height: 200px;
+    }
+
+    hr{
+        margin: 5px 15px 15px;
+    }
+
+    .card-body + .card-footer {
+      padding-top: 0;
+    }
+
+    .card-footer {
+      h5 {
+        font-size: 1.25em;
+        margin-bottom: 0;
+      }
+    }
+
+    .button-container{
+        margin-bottom: 6px;
+        text-align: center;
+    }
+}
+
+.card-add {
+    height: 200px;
+    width: 150%;
+    min-width: 200px;
+    margin-top: 100%;
+    &:hover{
+        cursor: pointer;
+    }
+
+    .circle { 
+        width: 60px; 
+        height: 60px;
+        position: absolute;
+        top: 0; 
+        bottom: 0; 
+        left: 0;
+        right: 0;
+        margin: auto; 
+        border: solid 2px #e8e8e8;
+        border-radius: 50%;
+        &:hover{
+            cursor: pointer;
+        }
+    } 
+
+    .circle::before{
+        content: " "; 
+        position: absolute; 
+        display: block; 
+        background-color: #e8e8e8; 
+        height: 6px; 
+        margin-top: -3px;
+        top: 50%; 
+        left: 10px; 
+        right: 10px; 
+    }
+
+    .circle::after { 
+        content: " "; 
+        position: absolute; 
+        display: block; 
+        background-color: #e8e8e8; 
+        width: 6px; 
+        margin-left: -3px;
+        left: 50%; 
+        top: 10px; 
+        bottom: 10px; 
+    } 
+
+    span {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        
+        color: #616161; 
+        text-align: center;
+        font-weight: 700;
+        font-size: 18px;
+    }
+        
+}

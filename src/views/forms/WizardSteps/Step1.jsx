@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import firebase from 'firebase';
 // reactstrap components
 import {
   Input,
@@ -50,49 +51,68 @@ class Wizard extends React.Component {
     return false;
   };
   change = (event, stateName, type, stateNameEqualTo, maxValue) => {
-    switch (type) {
-      case "email":
-        if (this.verifyEmail(event.target.value)) {
-          this.setState({ [stateName + "State"]: "has-success" });
-        } else {
-          this.setState({ [stateName + "State"]: "has-danger" });
-        }
-        break;
-      case "length":
-        if (this.verifyLength(event.target.value, stateNameEqualTo)) {
-          this.setState({ [stateName + "State"]: "has-success" });
-        } else {
-          this.setState({ [stateName + "State"]: "has-danger" });
-        }
-        break;
-      default:
-        break;
-    }
+    // switch (type) {
+    //   case "email":
+    //     if (this.verifyEmail(event.target.value)) {
+    //       this.setState({ [stateName + "State"]: "has-success" });
+    //     } else {
+    //       this.setState({ [stateName + "State"]: "has-danger" });
+    //     }
+    //     break;
+    //   case "length":
+    //     if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+    //       this.setState({ [stateName + "State"]: "has-success" });
+    //     } else {
+    //       this.setState({ [stateName + "State"]: "has-danger" });
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
     this.setState({ [stateName]: event.target.value });
   };
-  isValidated = () => {
-    if (
-      this.state.firstnameState === "has-success" &&
-      this.state.lastnameState === "has-success" &&
-      this.state.businessNameState === "has-success" &&
-      this.state.urlState === "has-success" &&
-      this.state.locationState === "has-success" && 
-      this.state.phoneState === "has-success"
-    ) {
-      return true;
-    } else {
-      if (this.state.firstnameState !== "has-success") {
-        this.setState({ firstnameState: "has-danger" });
+  // isValidated = () => {
+  //   if (
+  //     this.state.firstnameState === "has-success" &&
+  //     this.state.lastnameState === "has-success" &&
+  //     this.state.businessNameState === "has-success" &&
+  //     this.state.urlState === "has-success" &&
+  //     this.state.locationState === "has-success" && 
+  //     this.state.phoneState === "has-success"
+  //   ) {
+  //     return true;
+  //   } else {
+  //     if (this.state.firstnameState !== "has-success") {
+  //       this.setState({ firstnameState: "has-danger" });
+  //     }
+  //     if (this.state.lastnameState !== "has-success") {
+  //       this.setState({ lastnameState: "has-danger" });
+  //     }
+  //     if (this.state.emailState !== "has-success") {
+  //       this.setState({ emailState: "has-danger" });
+  //     }
+  //     return false;
+  //   }
+  // };
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged( (user) => {
+      if (user) {
+        var currentUser = {}
+        const db = firebase.firestore();
+        db.collection('users').doc(user.uid).get().then( (doc) => {
+          this.setState({
+            firstname: doc.data().firstname,
+            lastname: doc.data().firstname,
+            email: doc.data().email,
+            user: doc.data()})
+        });
+      } else {
+        
       }
-      if (this.state.lastnameState !== "has-success") {
-        this.setState({ lastnameState: "has-danger" });
-      }
-      if (this.state.emailState !== "has-success") {
-        this.setState({ emailState: "has-danger" });
-      }
-      return false;
-    }
-  };
+    });
+  }
+
   render() {
     return (
       <>
@@ -116,6 +136,7 @@ class Wizard extends React.Component {
                   name="firstname"
                   placeholder="First Name (required)"
                   type="text"
+                  value={this.state.firstname}
                   onChange={e => this.change(e, "firstname")}
                   onFocus={e => this.setState({ firstnameFocus: true })}
                   onBlur={e => this.setState({ firstnameFocus: false })}
@@ -138,6 +159,7 @@ class Wizard extends React.Component {
                 name="lastname"
                 placeholder="Last Name (required)"
                 type="text"
+                value={this.state.lastname}
                 onChange={e => this.change(e, "lastname")}
                 onFocus={e => this.setState({ lastnameFocus: true })}
                 onBlur={e => this.setState({ lastnameFocus: false })}
@@ -163,6 +185,7 @@ class Wizard extends React.Component {
                 name="email"
                 placeholder="Email (required)"
                 type="text"
+                value={this.state.email}
                 onChange={e => this.change(e, "email")}
                 onFocus={e => this.setState({ emailFocus: true })}
                 onBlur={e => this.setState({ emailFocus: false })}
@@ -207,7 +230,7 @@ class Wizard extends React.Component {
                 name="phone"
                 placeholder="Phone Number (required)"
                 type="text"
-                onChange={e => this.change(e, "phone", "length")}
+                onChange={e => this.change(e, "phone")}
                 onFocus={e => this.setState({ phoneFocus: true })}
                 onBlur={e => this.setState({ phoneFocus: false })}
               />
