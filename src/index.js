@@ -19,7 +19,6 @@ var config = {
   databaseURL: "https://guesthouse-1f439.firebaseio.com",
   projectId: "guesthouse-1f439",
   storageBucket: "guesthouse-1f439.appspot.com",
-  // messagingSenderId: "204336498060"
 };
 firebase.initializeApp(config);
 export const db = firebase.firestore();

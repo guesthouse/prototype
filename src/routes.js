@@ -1,18 +1,10 @@
-import Dashboard from "views/Dashboard.jsx";
 import Login from "views/pages/Login.jsx";
-import Notifications from "views/components/Notifications.jsx";
 import Register from "views/pages/Register.jsx";
 import UserProfile from "views/pages/UserProfile.jsx";
-import Wizard from "views/forms/Wizard.jsx";
-import BuildProfile from "views/pages/BuildProfile/BuildProfile.jsx";
 import Furniture from 'views/pages/Furniture/Furniture.jsx';
 import Property from 'views/pages/Property/Property.jsx';
 import FurnitureDetail from 'views/pages/FurnitureDetail/FurnitureDetail.jsx';
 import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx'
-
-import firebase from 'firebase';
-
-
 
 const routes = [
   {
@@ -44,7 +36,7 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: "/propertydetails",
+    path: "/properties/:id",
     name: "Property Detail",
     icon: "nc-icon nc-book-bookmark",
     component: PropertyDetail,

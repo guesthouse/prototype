@@ -4,13 +4,7 @@ import firebase from 'firebase';
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
-  FormGroup,
-  Input,
-  Container,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -86,7 +80,7 @@ class Furniture extends React.Component {
             </DropdownMenu>
           </UncontrolledDropdown>
         </Col>
-        { this.state.furniture.length == 0 &&
+        { this.state.furniture.length === 0 &&
           <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
             <h3 className='zero'>
               You Currently Do Not Have Any Furniture

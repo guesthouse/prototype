@@ -52,10 +52,9 @@
 }
 
 .card-user-flex{
-    width: 23%;
-    min-width: 250px;
-    max-width: 300px;
-    // margin:5px;
+    min-width: 200px;
+    max-width: 350px;
+
     .image{
         height: 200px;
 
@@ -64,15 +63,6 @@
       }
     }
 
-    .author{
-        text-align: center;
-        text-transform: none;
-        margin-top: -77px;
-
-        a +  p.description{
-            margin-top: -7px;
-        }
-    }
 
     .avatar{
         width: 124px;
@@ -82,7 +72,12 @@
     }
 
     .card-body{
-        // min-height: 200px;
+        text-align: left;
+        h5 {
+            text-align: left;
+            font-size: 1.25em;
+            margin-bottom: 0;
+          }
     }
 
     hr{
@@ -95,6 +90,7 @@
 
     .card-footer {
       h5 {
+        text-align: left;
         font-size: 1.25em;
         margin-bottom: 0;
       }
@@ -107,6 +103,7 @@
 }
 
 .card-details{
+    height: 700px;
     .image{
         height: 300px;
 
@@ -161,7 +158,8 @@
     height: 200px;
     width: 150%;
     min-width: 200px;
-    margin-top: 100%;
+    margin-top:30%;
+    margin-left: 30%;
     &:hover{
         cursor: pointer;
     }
@@ -219,4 +217,31 @@
         font-size: 18px;
     }
         
+}
+
+.card-add-info {
+    height: 700px;
+}
+
+.card-room {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .close {
+        right: 0;
+    }
+
+    span {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        
+        color: #616161; 
+        text-align: center;
+        font-weight: 700;
+        font-size: 24px;
+    }
 }

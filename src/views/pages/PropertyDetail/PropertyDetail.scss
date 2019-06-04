@@ -1,0 +1,12 @@
+.makerHolder {
+    width: 80px;
+    height: 80px;
+    border: solid 1px lightgrey;
+    background-color: lightgray;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    &:first-of-type{
+      margin-left: 15px;
+
+    }
+}

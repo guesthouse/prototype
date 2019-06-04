@@ -103,7 +103,7 @@ class Wizard extends React.Component {
         db.collection('users').doc(user.uid).get().then( (doc) => {
           this.setState({
             firstname: doc.data().firstname,
-            lastname: doc.data().firstname,
+            lastname: doc.data().lastname,
             email: doc.data().email,
             user: doc.data()})
         });

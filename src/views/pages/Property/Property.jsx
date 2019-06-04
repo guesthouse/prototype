@@ -1,16 +1,11 @@
 import React from "react";
 import './Property.scss';
-import firebase from 'firebase'
+import firebase from 'firebase';
+import {Link} from 'react-router-dom';
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
-  FormGroup,
-  Input,
-  Container,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -34,9 +29,8 @@ class Property extends React.Component {
       if (user) {
         const db = firebase.firestore();
         const propertyList = []
-        db.collection('properties').where("account_id", "==", user.uid ).get().then( snap => {
+        db.collection('properties').get().then( snap => {
           snap.forEach((doc)=>{
-            console.log(doc.data())
             let property = {id: doc.id, data: doc.data()}
             propertyList.push(property);
           });
@@ -44,6 +38,7 @@ class Property extends React.Component {
             properties: propertyList
           });
         });
+
         db.collection('users').doc(user.uid ).get().then( doc => {
           let user = doc.data();
           let fullname = user.firstname + " " + user.lastname
@@ -51,7 +46,6 @@ class Property extends React.Component {
             fullname: fullname
           })
         });
-        console.log(this.state.properties)
       } else {
         // No user is signed in.
       }
@@ -100,7 +94,7 @@ class Property extends React.Component {
           </UncontrolledDropdown>
         </Col>
 
-        { this.state.properties.length == 0 &&
+        { this.state.properties.length === 0 &&
           <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
             <h3 className='zero'>
               You Currently Do Not Have Any Properties
@@ -116,23 +110,27 @@ class Property extends React.Component {
         <div className='flex-row'>
           {(this.state.properties).map((e,i)=>{
             return (
-              <Card className="card-user-flex" md='4' key={i}>
-                <div className="image">
-                  <img
-                    alt="..."
-                    src={require("assets/img/bg/damir-bosnjak.jpg")}
-                  />
-                </div>
-                <CardBody>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
+              <Col  md="4" key={i}>
+                <Link to={`/properties/${e.id}`} >
+                  <Card className="card-user-flex">
+                    <div className="image">
+                      <img
+                        alt="..."
+                        src={require("assets/img/bg/damir-bosnjak.jpg")}
+                      />
+                    </div>
+                    <CardBody className='card-body'>
                       <div className="button-container">
                         <Row>
-                          <Col className="ml-auto">
+                          <Col>
                             <h5>
                               {e.data.address}
                             </h5>
                           </Col>
-                          <Col className="mr-auto" >
+                        </Row>
+
+                        <Row>    
+                          <Col>
                             <h5 className={this.state.statusColor}>
                               {e.data.status}
                             </h5>
@@ -146,9 +144,10 @@ class Property extends React.Component {
                           </Col>
                         </Row>
                       </div>
-                    </a>
-                </CardBody>
-              </Card>
+                    </CardBody>
+                  </Card>
+                </Link>
+              </Col>
             )
             })}
           </div>

@@ -25,7 +25,6 @@ class Admin extends React.Component {
 
   setUserRole = ( user ) => {
     if ( user.user_role == 'agent' ){
-      console.log('sup idiots')
     }
   }
   componentDidMount() {
@@ -37,17 +36,14 @@ class Admin extends React.Component {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log(user.email)
         const db = firebase.firestore();
         let accountRef = db.collection('users').doc(user.email)
         accountRef.get().then( doc => {
           let signedIn = doc.data();
-          console.log(signedIn)
-          // setUserRole(signedIn);
-        // User is signed in.
+
         });
       } else {
-        console.log('this hsit got hit')
+
       }
     });
   }

@@ -2,16 +2,6 @@ import React from "react";
 import Wizard from "views/forms/Wizard.jsx";
 import './BuildProfile.scss';
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  FormGroup,
-  Input,
-  Container,
-  Col
 } from "reactstrap";
 
 

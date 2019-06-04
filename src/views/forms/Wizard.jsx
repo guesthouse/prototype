@@ -130,7 +130,7 @@ class Wizard extends React.Component {
       lastname: allStates["Maker Info"].lastname,
       email: allStates["Maker Info"].email,
       businessName: allStates["Maker Info"].businessName,
-      averagePrice: allStates["Maker Info"].firstname,
+      averagePrice: allStates["Maker Info"].averagePrice,
       location: allStates["Maker Info"].location,
       phone: allStates["Maker Info"].phone,
       propertyType: allStates["Maker Info"].propertyType,
