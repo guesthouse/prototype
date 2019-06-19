@@ -27,8 +27,8 @@ class PropertyDetail extends React.Component {
       showAddModal: false,
       dropdownOpen: false,
       dropdownOpenMakers: false,
-      furnitureType: 'Furniture Type',
-      
+      furnitureType: 'Furniture',
+
       roomName: '',
       roomSize: '',
       furnitureItems: [],
@@ -248,13 +248,18 @@ class PropertyDetail extends React.Component {
                       <Row>
                         <Col md="6">
                           <FormGroup>
-                            <label>Furniture Type</label>
+                            <label>Furniture</label>
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
                               <DropdownToggle caret>
                                 {this.state.furnitureType}
                               </DropdownToggle>
                               <DropdownMenu>
                                 <DropdownItem onClick={this.setType}>Coffe Table</DropdownItem>
+                                <DropdownItem onClick={this.setType}>Night Stand</DropdownItem>
+                                <DropdownItem onClick={this.setType}>Carpets/Rugs</DropdownItem>
+                                <DropdownItem onClick={this.setType}>Sofas</DropdownItem>
+                                <DropdownItem onClick={this.setType}>Lighting</DropdownItem>
+                                <DropdownItem onClick={this.setType}>Artwork </DropdownItem>
                               </DropdownMenu>
                             </Dropdown>
                           </FormGroup>
