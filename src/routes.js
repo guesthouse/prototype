@@ -1,9 +1,9 @@
 import Login from "views/pages/Login.jsx";
 import Register from "views/pages/Register.jsx";
 import UserProfile from "views/pages/UserProfile.jsx";
-import Furniture from 'views/pages/Furniture/Furniture.jsx';
+import Product from 'views/pages/Product/Product.jsx';
 import Property from 'views/pages/Property/Property.jsx';
-import FurnitureDetail from 'views/pages/FurnitureDetail/FurnitureDetail.jsx';
+import ProductDetail from 'views/pages/ProductDetail/ProductDetail.jsx';
 import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx'
 
 const routes = [
@@ -29,10 +29,10 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: "/furniture",
-    name: "Furniture",
+    path: "/products",
+    name: "Products",
     icon: "nc-icon nc-book-bookmark",
-    component: Furniture,
+    component: Product,
     layout: "/admin"
   },
   {
@@ -43,17 +43,17 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: "/furnituredetails",
-    name: "Furniture Detail",
+    path: "/productdetails",
+    name: "Product Detail",
     icon: "nc-icon nc-book-bookmark",
-    component: FurnitureDetail,
+    component: ProductDetail,
     layout: "/admin"
   },
   {
     path: "/photos",
     name: "Photos",
     icon: "nc-icon nc-book-bookmark",
-    component: FurnitureDetail,
+    component: ProductDetail,
     layout: "/admin"
   },
   {

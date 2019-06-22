@@ -1,5 +1,5 @@
 import React from "react";
-import './FurnitureDetail.scss';
+import './ProductDetail.scss';
 import firebase from 'firebase';
 import {
   Button,
@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 
 
-class FurnitureDetail extends React.Component {
+class ProductDetail extends React.Component {
   
   render() {
     return (
@@ -26,4 +26,4 @@ class FurnitureDetail extends React.Component {
   }
 }
 
-export default FurnitureDetail;
+export default ProductDetail;
