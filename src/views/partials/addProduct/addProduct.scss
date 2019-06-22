@@ -2,8 +2,9 @@
 	height: auto;
 	.add-card {
 		margin:auto;
-		height: 1000px;
-		width: 500px;
+		height: auto;
+		width: auto;
+		max-width: 400px;
 		overflow: hidden;
 
 		.add-image{
@@ -18,9 +19,17 @@
 				border: solid 2px white;
 				border-radius: 10px;
 			}
+
+		}
+		.add-dropdown{
+			label{
+				margin-bottom: -20px;
+			}
 		}
 		
 	}
 
-	
+	.btn-center{
+		margin: auto;
+	}
 }

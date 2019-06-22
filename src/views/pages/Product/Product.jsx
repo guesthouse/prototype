@@ -21,7 +21,7 @@ class Product extends React.Component {
 
     this.state = {
       furniture: [],
-      moduleVisibility: 'hideBase' 
+      moduleVisibility: 'showBase' 
     }
 
     this.toggleVisbility = this.toggleVisbility.bind(this)
