@@ -133,7 +133,7 @@ class Sidebar extends React.Component {
     return (
       <div
         className="sidebar"
-        data-color={this.props.bgColor}
+        // data-color={this.props.bgColor}
         data-active-color={this.props.activeColor}
       >
         <div className="logo">
@@ -141,36 +141,6 @@ class Sidebar extends React.Component {
         </div>
 
         <div className="sidebar-wrapper" ref="sidebar">
-          <div className="user">
-            <div className="photo">
-              <img src={avatar} alt="Avatar" />
-            </div>
-            <div className="info">
-              <a
-                href="#pablo"
-                data-toggle="collapse"
-                aria-expanded={this.state.openAvatar}
-                onClick={() =>
-                  this.setState({ openAvatar: !this.state.openAvatar })
-                }
-              >
-                <span>
-                  John Smith
-                  <b className="caret" />
-                </span>
-              </a>
-              <Collapse isOpen={this.state.openAvatar}>
-                <ul className="nav">
-                  <li>
-                    <NavLink to="/admin/user-profile" activeClassName="">
-                      <span className="sidebar-mini-icon">MP</span>
-                      <span className="sidebar-normal">My Profile</span>
-                    </NavLink>
-                  </li>
-                </ul>
-              </Collapse>
-            </div>
-          </div>
           <Nav>{this.createLinks(this.props.routes)}</Nav>
         </div>
       </div>
