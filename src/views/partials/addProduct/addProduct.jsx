@@ -1,6 +1,8 @@
 import React from "react";
 import './addProduct.scss';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 import FileUploader from 'react-firebase-file-uploader/lib/CustomUploadButton';
 import {
   Button,
@@ -10,7 +12,6 @@ import {
   FormGroup,
   Input,
   Dropdown,
-  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -25,42 +26,91 @@ class addProduct extends React.Component {
 
     this.state = {
       user : {role: 'super'},
-      imageUrl: null,
+      imageURL: null,
       title: '',
       price: '',
       allTypes: [],
       productType: 'Select Type', 
+      // [{makerName: 'John Smith', makerID: 'm1234567'}]
       allMakers: [],
       selectedMaker: 'Select Maker',
+      makerName: '',
+      makerID: '',
       status: 'staged',
-      stagedLocation: [],
-      stagedDate: [],
-      archived: false
+      // [{propertyAddress: '123 Main St, propertyID: 'p12345'}]
+      allProprties: [],
+      propertyName: '',
+      propertyID: '',
+      installDate: ''
     }
+
+    this.handleUploadState = this.handleUploadStart.bind(this)
+    this.handleProgress = this.handleProgress.bind(this)
+    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
+
     this.handleText = this.handleText.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
-    this.uploadPhotos = this.uploadPhotos.bind(this)
     this.saveProduct = this.saveProduct.bind(this)
   }
 
   
-  handleText = () => {
-    // set state for values on input fields 
-    // use e, handle all fields with one method
+  handleUploadStart = () => this.setState({isUploading: true, progress: 0});
+
+  handleProgress = (progress) => this.setState({progress});
+
+  handleUploadError = (error) => {
+    this.setState({
+      isUploading: false});
+    console.error(error);
   }
 
-  handleSelect = () => {
-    // set state from the values selected on dropdown
-    // use e, do this with one method
+  handleUploadSuccess = (filename) => {
+    this.setState({
+      avatar: filename, 
+      progress: 100,
+      isUploading: false
+    });
+
+    firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({
+        imageURL: url
+      })
+    );
+  };
+
+  
+  handleText = (event) => {
+    event.preventDefault()
+    this.setState({
+      [event.target.id]: event.target.value
+    })
   }
 
-  uploadPhotos = () => {
-    // upload photos to google cloud and store URLs onstate 
-    // set header image and hide upload button (will happen on state change)
+  toggle = () => {
+    // control drop downs
   }
 
   saveProduct = () => {
-    // on success hide the add product modal (pass a method to set state from the parent component)
+    console.log(this.state)
+    const db = firebase.firestore()
+    db.collection('products').doc().set({
+      title: this.state.title,
+      price: this.state.price,
+      productType: this.state.productType,
+      makerName: this.state.makerName,
+      makerID: this.state.makerID,
+      propertyName: this.state.propertyName,
+      propertyID: this.state.propertyID,
+      installDate: this.state.installDate,
+      notes: this.state.notes,
+      imageURL: this.state.imageURL,
+      archived: false
+    }).then(function(docRef) {
+      // call method from parent coponent to change state and close edit
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+      // expose error to user
+      console.error("Error adding document: ", error);
+    });
   }
 
   componentDidMount() {
@@ -85,22 +135,22 @@ class addProduct extends React.Component {
     return (
       <div className="addProduct">
         <Card className='add-card'>
-            { this.state.imageUrl 
-              ? <img src={this.state.imageUrl} alt='Uploaded image of product'/>
+            { this.state.imageURL != null
+              ? <img src={this.state.imageURL} alt='maker uploaded product'/>
               : <div className='add-image'>
                 <div className="center">
                   <FileUploader
                     accept="image/*"
                     multiple
-                    name="productPhotos"
+                    name="avatar"
                     randomizeFilename
                     storageRef={firebase.storage().ref('images')}
                     onUploadStart={ this.handleUploadStart }
                     onUploadError={ this.handleUploadError }
-                    onUploadSuccess={ this.handleUploadMultipleSuccess }
+                    onUploadSuccess={ this.handleUploadSuccess }
                     onProgress={ this.handleProgress }
                     style={ uploadStyle }
-                  >+ Photos
+                  >+ Photo
                   </FileUploader>
                 </div>
               </div>
@@ -116,6 +166,7 @@ class addProduct extends React.Component {
                       placeholder="Product Title"
                       type="text"
                       onChange={this.handleText}
+                      id="title"
                     />
                   </FormGroup>
                 </Col>
@@ -127,6 +178,7 @@ class addProduct extends React.Component {
                       placeholder="0.00"
                       type="nummeric"
                       onChange={this.handleText}
+                      id="price"
                     />
                   </FormGroup>
                 </Col>
@@ -232,6 +284,7 @@ class addProduct extends React.Component {
                         type="textarea"
                         cols="80"
                         rows="8"
+                        id="notes"
                     />
                     </FormGroup>
                   </Col>
