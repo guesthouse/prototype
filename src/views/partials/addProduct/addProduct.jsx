@@ -14,7 +14,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Col,
+  Col, 
   Row
 } from "reactstrap";
 
@@ -24,12 +24,18 @@ class addProduct extends React.Component {
     super()
 
     this.state = {
-      furniture: [],
-      imageUrl: null,
-      productType: 'Select Type', 
       user : {role: 'super'},
+      imageUrl: null,
+      title: '',
+      price: '',
+      allTypes: [],
+      productType: 'Select Type', 
+      allMakers: [],
       selectedMaker: 'Select Maker',
-      status: 'Select Status'
+      status: 'staged',
+      stagedLocation: [],
+      stagedDate: [],
+      archived: false
     }
     this.handleText = this.handleText.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
@@ -50,15 +56,17 @@ class addProduct extends React.Component {
 
   uploadPhotos = () => {
     // upload photos to google cloud and store URLs onstate 
-
+    // set header image and hide upload button (will happen on state change)
   }
 
   saveProduct = () => {
-    
+    // on success hide the add product modal (pass a method to set state from the parent component)
   }
 
   componentDidMount() {
-    // query to get all the types of makers and 
+    // query to get all the types of products
+    // if super user get all makers names and id's
+    // if maker set state with maker info (name and id) for upload
   }
 
   render() {
@@ -80,33 +88,44 @@ class addProduct extends React.Component {
             { this.state.imageUrl 
               ? <img src={this.state.imageUrl} alt='Uploaded image of product'/>
               : <div className='add-image'>
-                  <div className="center">
-                    <FileUploader
-                      accept="image/*"
-                      multiple
-                      name="productPhotos"
-                      randomizeFilename
-                      storageRef={firebase.storage().ref('images')}
-                      onUploadStart={ this.handleUploadStart }
-                      onUploadError={ this.handleUploadError }
-                      onUploadSuccess={ this.handleUploadMultipleSuccess }
-                      onProgress={ this.handleProgress }
-                      style={ uploadStyle }
-                    >+ Photos
-                    </FileUploader>
-                  </div>
+                <div className="center">
+                  <FileUploader
+                    accept="image/*"
+                    multiple
+                    name="productPhotos"
+                    randomizeFilename
+                    storageRef={firebase.storage().ref('images')}
+                    onUploadStart={ this.handleUploadStart }
+                    onUploadError={ this.handleUploadError }
+                    onUploadSuccess={ this.handleUploadMultipleSuccess }
+                    onProgress={ this.handleProgress }
+                    style={ uploadStyle }
+                  >+ Photos
+                  </FileUploader>
                 </div>
+              </div>
             }
           <CardBody>
             <Form>
+
               <Row>
                 <Col md="8">
                   <FormGroup>
                     <label>Product Title</label>
                     <Input
-                      // defaultValue={this.state.user.businessName}
                       placeholder="Product Title"
                       type="text"
+                      onChange={this.handleText}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col md="4">
+                  <FormGroup>
+                    <label>Price</label>
+                    <Input
+                      placeholder="0.00"
+                      type="nummeric"
                       onChange={this.handleText}
                     />
                   </FormGroup>
@@ -114,12 +133,11 @@ class addProduct extends React.Component {
               </Row>
 
               <Row md="12">
-
-                 { this.state.user.role === 'super'
+                { this.state.user.role === 'super'
                   ? <Col md="4" >
                       <FormGroup className="add-dropdown">
                         <label>Maker's Name</label>
-                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md" className="product-drop">
+                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
                           <DropdownToggle caret>
                             {this.state.selectedMaker}
                           </DropdownToggle>
@@ -131,10 +149,11 @@ class addProduct extends React.Component {
                     </Col>
                   : null 
                 }
+
                 <Col md="4">
                   <FormGroup className="add-dropdown">
                     <label>Product Type</label>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md" className="product-drop">
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
                       <DropdownToggle caret>
                         {this.state.productType}
                       </DropdownToggle>
@@ -149,11 +168,12 @@ class addProduct extends React.Component {
                     </Dropdown>
                   </FormGroup>
                 </Col>
+
                 { this.state.user.role === 'super'
                   ? <Col md="4">
                     <FormGroup className="add-dropdown">
                       <label>Staging Status</label>
-                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md" className="product-drop">
+                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
                         <DropdownToggle caret>
                           {this.state.status}
                         </DropdownToggle>
@@ -170,18 +190,38 @@ class addProduct extends React.Component {
                 }
               </Row>
 
-               <Row>
-                <Col md="6">
-                  <FormGroup>
-                    <label>Price</label>
-                    <Input
-                      placeholder="Price"
-                      type="nummeric"
-                      onChange={this.handleText}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+              { this.state.status === 'staged' || this.state.status === 'planned'
+                ? <Row md="12">
+                  <Col md="4" >
+                    <FormGroup className="add-dropdown">
+                      <label>Staging Location</label>
+                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle caret>
+                          Location
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={this.setType}>Johnny Appleseed</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                    </FormGroup>
+                  </Col>
+
+                  <Col md="4" >
+                    <FormGroup className="add-dropdown">
+                      <label>Staging Date</label>
+                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle caret>
+                          Date
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={this.setType}>Johnny Appleseed</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                    </FormGroup>
+                  </Col>
+                </Row>
+                : null 
+              }
               
               { this.state.user.role === 'super'
                 ? <Row>
@@ -189,15 +229,14 @@ class addProduct extends React.Component {
                     <FormGroup>
                       <label>Notes</label>
                       <Input
-                        className="textarea"
                         type="textarea"
                         cols="80"
-                        rows="4"
+                        rows="8"
                     />
                     </FormGroup>
                   </Col>
                 </Row>
-              : null
+                : null
               }
 
               <Row>

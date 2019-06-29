@@ -21,7 +21,8 @@ class Product extends React.Component {
 
     this.state = {
       furniture: [],
-      moduleVisibility: 'showBase' 
+      user: {},
+      moduleVisibility: 'hideBase' 
     }
 
     this.toggleVisbility = this.toggleVisbility.bind(this)
@@ -44,12 +45,11 @@ class Product extends React.Component {
         let accountRef = db.collection('users').doc(user.email)
         accountRef.get().then( doc => {
           let account = doc.data()
-
-
-        // User is signed in.
+          // User is signed in.
+          // set state with user
         });
       } else {
-        // No user is signed in.
+        // No user is signed in. redirect to login or register
       }
     });
   }
@@ -152,7 +152,7 @@ class Product extends React.Component {
                 }
               </div>
             </div>
-          : <AddProduct>        
+          : <AddProduct user={this.state.user}>        
             </AddProduct>
         }
       </div>
