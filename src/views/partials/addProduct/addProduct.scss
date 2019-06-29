@@ -4,27 +4,28 @@
 		margin:auto;
 		height: auto;
 		width: auto;
-		max-width: 400px;
+		max-width: 560px;
 		overflow: hidden;
 
 		.add-image{
 			width: 100%;
 			height: 200px;
 			background-color: lightgrey;
-			.plus-box {
-				width: 80px;
-				height: 80px;
+			.center {
+				width: 100px;
 				margin: auto;
-
-				border: solid 2px white;
-				border-radius: 10px;
 			}
-
 		}
+		
 		.add-dropdown{
 			label{
-				margin-bottom: -20px;
+				margin-bottom: 0px;
 			}
+		}
+
+		.product-drop {
+			width: auto;
+
 		}
 		
 	}
