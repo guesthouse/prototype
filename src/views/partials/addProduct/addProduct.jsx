@@ -25,23 +25,23 @@ class addProduct extends React.Component {
     super()
 
     this.state = {
+      dropdownOpen: false,
       user : {role: 'super'},
       imageURL: null,
       title: '',
       price: '',
       allTypes: [],
       productType: 'Select Type', 
-      // [{makerName: 'John Smith', makerID: 'm1234567'}]
       allMakers: [],
       selectedMaker: 'Select Maker',
       makerName: '',
       makerID: '',
       status: 'staged',
-      // [{propertyAddress: '123 Main St, propertyID: 'p12345'}]
-      allProprties: [],
+      allProperties: [],
       propertyName: '',
       propertyID: '',
-      installDate: ''
+      installDate: '',
+      notes: ''
     }
 
     this.handleUploadState = this.handleUploadStart.bind(this)
@@ -85,7 +85,11 @@ class addProduct extends React.Component {
   }
 
   toggle = () => {
-    // control drop downs
+    // control drop downsthis.setState(prevState => ({
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+ 
   }
 
   saveProduct = () => {
@@ -105,7 +109,6 @@ class addProduct extends React.Component {
       archived: false
     }).then(function(docRef) {
       // call method from parent coponent to change state and close edit
-      console.log("Document written with ID: ", docRef.id);
     })
     .catch(function(error) {
       // expose error to user
@@ -117,6 +120,33 @@ class addProduct extends React.Component {
     // query to get all the types of products
     // if super user get all makers names and id's
     // if maker set state with maker info (name and id) for upload
+    let propertyList = []
+    let userList = []
+    
+    const db = firebase.firestore();
+    db.collection('properties').get().then( snap => {
+      snap.forEach((doc)=>{
+        let property = {id: doc.id, address: doc.data().address}
+        propertyList.push(property);
+      });
+      this.setState({
+        allProperties: propertyList
+      });
+      console.log(this.state.allProperties)
+    });
+
+    let accountRef = db.collection('users').where("userRole", "==", 'Maker' )
+    accountRef.get().then( snap => {
+      snap.forEach((doc)=>{
+        let user = {id: doc.id, makerName: doc.data().fullname}
+        userList.push(user);
+      });
+      this.setState({
+        allMakers: userList
+      });
+      console.log(this.state.allMakers)
+    });
+
   }
 
   render() {
@@ -194,7 +224,11 @@ class addProduct extends React.Component {
                             {this.state.selectedMaker}
                           </DropdownToggle>
                           <DropdownMenu>
-                            <DropdownItem onClick={this.setType}>Johnny Appleseed</DropdownItem>
+                            {(this.state.allMakers).map((e,i)=>{
+                              return (
+                              <DropdownItem onClick={this.setType} key={i} id={e.id}>{e.makerName}</DropdownItem>
+                              )
+                            })}
                           </DropdownMenu>
                         </Dropdown>
                       </FormGroup>
@@ -252,7 +286,11 @@ class addProduct extends React.Component {
                           Location
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem onClick={this.setType}>Johnny Appleseed</DropdownItem>
+                          {(this.state.allProperties).map((e,i)=>{
+                            return (
+                             <DropdownItem onClick={this.setType} key={i} id={e.id}>{e.address}</DropdownItem>
+                            )
+                          })}
                         </DropdownMenu>
                       </Dropdown>
                     </FormGroup>
