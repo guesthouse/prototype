@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
 import FileUploader from 'react-firebase-file-uploader/lib/CustomUploadButton';
+import ReactDatetime from "react-datetime";
 import {
   Button,
   Card,
@@ -25,7 +26,11 @@ class addProduct extends React.Component {
     super()
 
     this.state = {
-      dropdownOpen: false,
+      makerNameDropdownOpen: false,
+      productTypeDropdownOpen: false,
+      installStatusDropdownOpen: false,
+      installLocationDropdownOpen: false,
+      
       user : {role: 'super'},
       imageURL: null,
       title: '',
@@ -49,6 +54,7 @@ class addProduct extends React.Component {
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
 
     this.handleText = this.handleText.bind(this)
+    this.setInstallDate = this.setInstallDate.bind(this)
     this.saveProduct = this.saveProduct.bind(this)
   }
 
@@ -77,23 +83,30 @@ class addProduct extends React.Component {
   };
 
   
-  handleText = (event) => {
-    event.preventDefault()
+  handleText = (e) => {
+    e.preventDefault()
     this.setState({
-      [event.target.id]: event.target.value
+      [e.target.id]: e.target.value
     })
   }
 
-  toggle = () => {
-    // control drop downsthis.setState(prevState => ({
+  toggle = (e) => {
+    var singleDropdown = [e.target.id] + 'DropdownOpen';
     this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen,
+     [singleDropdown]: !prevState.singleDropdown,
     }));
- 
   }
 
+  setInstallDate = (e) => {
+    var date = e.toDate();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var year = date.getFullYear();
+    var picked = month + '/' + day + '/' + year;
+    this.setState({installDate: picked});
+  } 
+
   saveProduct = () => {
-    console.log(this.state)
     const db = firebase.firestore()
     db.collection('products').doc().set({
       title: this.state.title,
@@ -109,6 +122,7 @@ class addProduct extends React.Component {
       archived: false
     }).then(function(docRef) {
       // call method from parent coponent to change state and close edit
+      console.log('product successfully added')
     })
     .catch(function(error) {
       // expose error to user
@@ -132,7 +146,6 @@ class addProduct extends React.Component {
       this.setState({
         allProperties: propertyList
       });
-      console.log(this.state.allProperties)
     });
 
     let accountRef = db.collection('users').where("userRole", "==", 'Maker' )
@@ -144,7 +157,6 @@ class addProduct extends React.Component {
       this.setState({
         allMakers: userList
       });
-      console.log(this.state.allMakers)
     });
 
   }
@@ -166,7 +178,9 @@ class addProduct extends React.Component {
       <div className="addProduct">
         <Card className='add-card'>
             { this.state.imageURL != null
-              ? <img src={this.state.imageURL} alt='maker uploaded product'/>
+              ? <div className="image-container">
+                  <img src={this.state.imageURL} alt='maker uploaded product' className="product"/>
+                </div>
               : <div className='add-image'>
                 <div className="center">
                   <FileUploader
@@ -219,8 +233,8 @@ class addProduct extends React.Component {
                   ? <Col md="4" >
                       <FormGroup className="add-dropdown">
                         <label>Maker's Name</label>
-                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                          <DropdownToggle caret>
+                        <Dropdown isOpen={this.state.makerNameDropdownOpen} toggle={this.toggle} size="md">
+                          <DropdownToggle id="makerName" caret>
                             {this.state.selectedMaker}
                           </DropdownToggle>
                           <DropdownMenu>
@@ -239,8 +253,8 @@ class addProduct extends React.Component {
                 <Col md="4">
                   <FormGroup className="add-dropdown">
                     <label>Product Type</label>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                      <DropdownToggle caret>
+                    <Dropdown isOpen={this.state.productTypeDropdownOpen} toggle={this.toggle} size="md">
+                      <DropdownToggle id="productType" caret>
                         {this.state.productType}
                       </DropdownToggle>
                       <DropdownMenu>
@@ -259,8 +273,8 @@ class addProduct extends React.Component {
                   ? <Col md="4">
                     <FormGroup className="add-dropdown">
                       <label>Staging Status</label>
-                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                        <DropdownToggle caret>
+                      <Dropdown isOpen={this.state.installStatusDropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle id="installStatus" caret>
                           {this.state.status}
                         </DropdownToggle>
                         <DropdownMenu>
@@ -281,8 +295,8 @@ class addProduct extends React.Component {
                   <Col md="4" >
                     <FormGroup className="add-dropdown">
                       <label>Staging Location</label>
-                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                        <DropdownToggle caret>
+                      <Dropdown isOpen={this.state.installLocationDropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle id="installLocation" caret>
                           Location
                         </DropdownToggle>
                         <DropdownMenu>
@@ -298,15 +312,17 @@ class addProduct extends React.Component {
 
                   <Col md="4" >
                     <FormGroup className="add-dropdown">
-                      <label>Staging Date</label>
-                      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                        <DropdownToggle caret>
-                          Date
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem onClick={this.setType}>Johnny Appleseed</DropdownItem>
-                        </DropdownMenu>
-                      </Dropdown>
+                      <label>Install Date</label>
+                      <ReactDatetime
+                        inputProps={{
+                          className: "form-control",
+                          placeholder: "Pick Date"
+                        }}
+                        dateFormat='MM-DD-YYYY'
+                        closeOnSelect= {true}
+                        onChange= {this.setInstallDate}
+                        timeFormat={false}
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
