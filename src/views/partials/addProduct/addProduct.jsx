@@ -30,7 +30,7 @@ class addProduct extends React.Component {
       productTypeDropdownOpen: false,
       installStatusDropdownOpen: false,
       installLocationDropdownOpen: false,
-      
+
       user : {role: 'super'},
       imageURL: null,
       title: '',
@@ -39,12 +39,12 @@ class addProduct extends React.Component {
       productType: 'Select Type', 
       allMakers: [],
       selectedMaker: 'Select Maker',
-      makerName: '',
       makerID: '',
+      makerName: '',
       status: 'staged',
       allProperties: [],
-      propertyName: '',
       propertyID: '',
+      propertyName: '',
       installDate: '',
       notes: ''
     }
@@ -55,6 +55,10 @@ class addProduct extends React.Component {
 
     this.handleText = this.handleText.bind(this)
     this.setInstallDate = this.setInstallDate.bind(this)
+    this.setMaker = this.setMaker.bind(this)
+    this.setType = this.setType.bind(this)
+    this.setLocation = this.setLocation.bind(this)
+    this.setStatus = this.setStatus.bind(this)
     this.saveProduct = this.saveProduct.bind(this)
   }
 
@@ -96,6 +100,36 @@ class addProduct extends React.Component {
      [singleDropdown]: !prevState.singleDropdown,
     }));
   }
+
+  setMaker = (e) => {
+    console.log (e.target.innerHTML)
+    this.setState ({
+      makerID: e.target.id,
+      makerName: e.target.value
+    });
+  };
+
+  setType = (e) => {
+    console.log(e.target.innerHTML)
+    this.setState({
+      productType: e.target.innerHTML
+    });
+  };
+
+  setLocation = (e) => {
+    console.log (e.target.id, e.target.innerHTML)
+    this.setState({
+      propertyID: e.target.id,
+      propertyName: e.target.innerHTML
+    });
+  };
+  
+  setStatus = (e) => {
+    console.log (e.target.innerHTML)
+    this.setState({
+      status: e.target.innerHTML
+    });
+  };
 
   setInstallDate = (e) => {
     var date = e.toDate();
@@ -240,7 +274,7 @@ class addProduct extends React.Component {
                           <DropdownMenu>
                             {(this.state.allMakers).map((e,i)=>{
                               return (
-                              <DropdownItem onClick={this.setType} key={i} id={e.id}>{e.makerName}</DropdownItem>
+                              <DropdownItem onClick={this.setMaker} key={i} id={e.id}>{e.makerName}</DropdownItem>
                               )
                             })}
                           </DropdownMenu>
@@ -278,10 +312,10 @@ class addProduct extends React.Component {
                           {this.state.status}
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem onClick={this.setType}>Available</DropdownItem>
-                          <DropdownItem onClick={this.setType}>Requested</DropdownItem>
-                          <DropdownItem onClick={this.setType}>Staged</DropdownItem>
-                          <DropdownItem onClick={this.setType}>Sold</DropdownItem>
+                          <DropdownItem onClick={this.setStatus}>Available</DropdownItem>
+                          <DropdownItem onClick={this.setStatus}>Requested</DropdownItem>
+                          <DropdownItem onClick={this.setStatus}>Staged</DropdownItem>
+                          <DropdownItem onClick={this.setStatus}>Sold</DropdownItem>
                         </DropdownMenu>
                       </Dropdown>
                     </FormGroup>
@@ -302,7 +336,7 @@ class addProduct extends React.Component {
                         <DropdownMenu>
                           {(this.state.allProperties).map((e,i)=>{
                             return (
-                             <DropdownItem onClick={this.setType} key={i} id={e.id}>{e.address}</DropdownItem>
+                             <DropdownItem onClick={this.setLocation} key={i} id={e.id}>{e.address}</DropdownItem>
                             )
                           })}
                         </DropdownMenu>
