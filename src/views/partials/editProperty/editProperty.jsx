@@ -1,5 +1,5 @@
 import React from "react";
-import './PropertyDetail.scss';
+import './editProperty.scss';
 import firebase from 'firebase';
 import {
   Button,
@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 
 
-class PropertyDetail extends React.Component {
+class EditProperty extends React.Component {
   constructor(){
     super()
     this.state = {
@@ -99,7 +99,7 @@ class PropertyDetail extends React.Component {
   }
   render() {
     return (
-      <div className="property">
+      <div className="editProperty">
         <Row>
             <Col md="6" sm={{size: "6"}}>
               <Card className="card-details">
@@ -115,13 +115,16 @@ class PropertyDetail extends React.Component {
                       <Col className="pr-1" md="8">
                         <FormGroup>
                           <label>Address</label>
-                          <h6>{this.state.address}</h6>
+                          <Input
+                            // defaultValue={this.state.user.businessName}
+                            placeholder="Address"
+                            type="text"
+                          />
                         </FormGroup>
                       </Col>
                       <Col className="pr-1" md="4">
                       <div  className="button-align">
-                        <label>Listing URL</label>
-                        <h6>{this.state.address}</h6>
+                        <Button>Listing URL</Button>
                       </div>
                       </Col>
                     </Row>
@@ -129,42 +132,59 @@ class PropertyDetail extends React.Component {
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>Type</label>
-                          <h6>{this.state.propertyType}</h6>
+                          <Input
+                            // defaultValue={this.state.user.firstname}
+                            placeholder="Company"
+                            type="text"
+                          />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="6">
                         <FormGroup>
                           <label>Description</label>
-                          <h6>{this.state.description}</h6>
+                          <Input
+                            // defaultValue={this.state.user.lastname}
+                            placeholder="Last Name"
+                            type="text"
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
                     <h5>Details</h5>
                     <Row>
                       <Col md="4">
-                        <FormGroup>
-                          <label>Bedroom Number</label>
-                          <h6>{this.state.bedNumber}</h6>
-                        </FormGroup>
+                          <Input
+                            // defaultValue={this.state.user.location}
+                            placeholder="Bed Number"
+                            type="text"
+                          />
                       </Col>
                       <Col md="4">
-                        <FormGroup>
-                          <label>Bathroom Number</label>
-                          <h6>{this.state.bathNumber}</h6>
-                        </FormGroup>
+                          <Input
+                            // defaultValue={this.state.user.location}
+                            placeholder="Bath Number"
+                            type="text"
+                          />
                       </Col>
                       <Col md="4">
-                        <FormGroup>
-                          <label>Address</label>
-                          <h6>{this.state.address}</h6>
-                        </FormGroup>
+                          <Input
+                            // defaultValue={this.state.user.location}
+                            placeholder="Date For Staging"
+                            type="text"
+                          />
                       </Col>
                     </Row>
                     <Row>
                       <Col md="12">
                         <FormGroup>
                           <label>Additional Information</label>
-                          <p>{this.state.additionalInfo}</p>
+                          <Input
+                            className="textarea"
+                            type="textarea"
+                            cols="80"
+                            rows="4"
+                            // defaultValue={this.state.user.additionalInfo}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -506,4 +526,4 @@ class PropertyDetail extends React.Component {
   }
 }
 
-export default PropertyDetail;
+export default EditProperty;

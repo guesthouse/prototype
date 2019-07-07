@@ -20,9 +20,9 @@ class Product extends React.Component {
     super()
 
     this.state = {
-      furniture: [],
+      products: [],
       user: {},
-      moduleVisibility: 'hideBase' 
+      moduleVisibility: 'showBase' 
     }
 
     this.toggleVisbility = this.toggleVisbility.bind(this)
@@ -39,15 +39,27 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const db = firebase.firestore();
-        let accountRef = db.collection('users').doc(user.email)
-        accountRef.get().then( doc => {
-          let account = doc.data()
-          // User is signed in.
-          // set state with user
+        const productList = []
+        db.collection('products').get().then( snap => {
+          snap.forEach((doc)=>{
+            let product = {id: doc.id, data: doc.data()}
+            productList.push(product);
+          });
+
+          this.setState({
+            products: productList
+          });
         });
+
+        // let accountRef = db.collection('users').doc(user.email)
+        // accountRef.get().then( doc => {
+        //   let account = doc.data()
+        //   User is signed in.
+        //  set state with user
+        // });
       } else {
         // No user is signed in. redirect to login or register
       }
@@ -80,26 +92,20 @@ class Product extends React.Component {
                     href="#pablo"
                     onClick={e => e.preventDefault()}
                   >
-                    Furniture Overview
+                    Product Overview
                   </DropdownItem>
                   <DropdownItem
                     href="#pablo"
                     onClick={this.toggleVisbility}
                   >
-                    Add Furniture
-                  </DropdownItem>
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    Furniture History
+                    Add Product
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Col>
 
             <div>
-              { this.state.furniture.length === 0 
+              { this.state.products.length === 0 
                 ? <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
                     <h3 className='zero'>
                       You Currently Do Not Have Any Furniture
@@ -111,48 +117,42 @@ class Product extends React.Component {
                     </Col>
                   </Col>
                 : <div className='flex-row'>
-                    {(this.state.furniture).map((e,i)=>{
+                    {(this.state.products).map((e,i)=>{
                       return (
-                        <Card className="card-user-flex" md='4' key={i}>
-                          <div className="image">
-                            <img
-                              alt="..."
-                              src={require("assets/img/bg/damir-bosnjak.jpg")}
-                            />
-                          </div>
-                          <CardBody>
-                              <a href="#pablo" onClick={e => e.preventDefault()}>
-                                <div className="button-container">
-                                  <Row>
-                                    <Col className="ml-auto">
-                                      <h5>
-                                        {e.data.address}
-                                      </h5>
-                                    </Col>
-                                    <Col className="mr-auto" >
-                                      <h5 className={this.state.statusColor}>
-                                        {e.data.status}
-                                      </h5>
-                                    </Col>
-                                  </Row>
-        
-                                  <Row>
-                                    <Col></Col>
-                                    <Col>
-                                      <h5>{this.state.fullname}</h5> 
-                                    </Col>
-                                  </Row>
-                                </div>
-                              </a>
-                          </CardBody>
-                        </Card>
+                        <div key={i}>
+                          <Card className="card-user-flex" md='4' >
+                            <div className="product-image">
+                              <img
+                                alt="..."
+                                src={e.data.imageURL}
+                              />
+                            </div>
+                          </Card>
+                        
+                          <a href="/product/detail" onClick={e => e.preventDefault()}>
+                            <Row>
+                              <Col className="ml-auto">
+                                <h5>
+                                  {e.data.title}
+                                </h5>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col className="mr-auto" >
+                                <h5 className={this.state.statusColor}>
+                                  {e.data.status}
+                                </h5>
+                              </Col>
+                            </Row>
+                          </a>
+                        </div>
                       )
                     })}
                   </div>
                 }
               </div>
             </div>
-          : <AddProduct user={this.state.user}>        
+          : <AddProduct user={this.state.user} closeModal={this.toggleVisbility}>        
             </AddProduct>
         }
       </div>

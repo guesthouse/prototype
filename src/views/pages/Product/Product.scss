@@ -1,23 +1,32 @@
 .furniture {
-    margin-top: 50px;
-    padding: 20px;
-    min-height: 100vh;
+  margin-top: 50px;
+  padding: 20px;
+  min-height: 100vh;
 
-    .zero {
-        margin-top: 100px;
-        text-align: center;
-    }
-    .flex-row{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        
-    }
+  .zero {
+    margin-top: 100px;
+    text-align: center;
+  }
+  .flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+      
+  }
 
-    .button-align {
-        margin-top: 10px !important;
-    }
+  .button-align {
+    margin-top: 10px !important;
+  }
 
+  .product-image {
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+    }
+  }
 
 }

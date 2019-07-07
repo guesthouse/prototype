@@ -1,5 +1,5 @@
 import React from "react";
-import './addProduct.scss';
+import './editProduct.scss';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -21,7 +21,7 @@ import {
 } from "reactstrap";
 
 
-class addProduct extends React.Component {
+class editProduct extends React.Component {
   constructor(){
     super()
 
@@ -105,7 +105,7 @@ class addProduct extends React.Component {
     console.log (e.target.innerHTML)
     this.setState ({
       makerID: e.target.id,
-      makerName: e.target.innerHTML
+      makerName: e.target.value
     });
   };
 
@@ -142,57 +142,44 @@ class addProduct extends React.Component {
 
   saveProduct = () => {
     const db = firebase.firestore()
-    db.collection('products').doc().set({
-      title: this.state.title,
-      price: this.state.price,
-      productType: this.state.productType,
-      makerName: this.state.makerName,
-      makerID: this.state.makerID,
-      propertyName: this.state.propertyName,
-      propertyID: this.state.propertyID,
-      installDate: this.state.installDate,
-      notes: this.state.notes,
-      imageURL: this.state.imageURL,
-      status: this.state.status,
-      archived: false
-    }).then((docRef) => {
-      this.props.closeModal();
-    })
-    .catch(function(error) {
-      // expose error to user
-      console.error("Error adding document: ", error);
-    });
+    console.log(this.state)
+    // db.collection('products').doc().set({
+    //   title: this.state.title,
+    //   price: this.state.price,
+    //   productType: this.state.productType,
+    //   makerName: this.state.makerName,
+    //   makerID: this.state.makerID,
+    //   propertyName: this.state.propertyName,
+    //   propertyID: this.state.propertyID,
+    //   installDate: this.state.installDate,
+    //   notes: this.state.notes,
+    //   imageURL: this.state.imageURL,
+    //   archived: false
+    // }).then(function(docRef) {
+    //   // call method from parent coponent to change state and close edit
+    //   console.log('product successfully added')
+    // })
+    // .catch(function(error) {
+    //   // expose error to user
+    //   console.error("Error adding document: ", error);
+    // });
   }
 
   componentDidMount() {
-    // query to get all the types of products
-    // if super user get all makers names and id's
-    // if maker set state with maker info (name and id) for upload
-    let propertyList = []
-    let userList = []
-    
-    const db = firebase.firestore();
-    db.collection('properties').get().then( snap => {
-      snap.forEach((doc)=>{
-        let property = {id: doc.id, address: doc.data().address}
-        propertyList.push(property);
-      });
-      this.setState({
-        allProperties: propertyList
-      });
+    console.log(this.props.product)
+    this.setState({
+      title: this.props.product.title,
+      price: this.props.product.price,
+      productType: this.props.product.productType,
+      makerName: this.props.product.makerName,
+      makerID: this.props.product.makerID,
+      propertyName: this.props.product.propertyName,
+      propertyID: this.props.product.propertyID,
+      installDate: this.props.product.installDate,
+      notes: this.props.product.notes,
+      imageURL: this.props.product.imageURL,
+      archived: this.props.product.archived
     });
-
-    let accountRef = db.collection('users').where("userRole", "==", 'Maker' )
-    accountRef.get().then( snap => {
-      snap.forEach((doc)=>{
-        let user = {id: doc.id, makerName: doc.data().fullname}
-        userList.push(user);
-      });
-      this.setState({
-        allMakers: userList
-      });
-    });
-
   }
 
   render() {
@@ -209,30 +196,30 @@ class addProduct extends React.Component {
       textAlign: 'center'
     }
     return (
-      <div className="addProduct">
+      <div className="editProduct">
         <Card className='add-card'>
-            { this.state.imageURL != null
-              ? <div className="image-container">
-                  <img src={this.state.imageURL} alt='maker uploaded product' className="product"/>
-                </div>
-              : <div className='add-image'>
-                <div className="center">
-                  <FileUploader
-                    accept="image/*"
-                    multiple
-                    name="avatar"
-                    randomizeFilename
-                    storageRef={firebase.storage().ref('images')}
-                    onUploadStart={ this.handleUploadStart }
-                    onUploadError={ this.handleUploadError }
-                    onUploadSuccess={ this.handleUploadSuccess }
-                    onProgress={ this.handleProgress }
-                    style={ uploadStyle }
-                  >+ Photo
-                  </FileUploader>
-                </div>
+          { this.state.imageURL != null
+            ? <div className="image-container">
+                <img src={this.state.imageURL} alt='maker uploaded product' className="product"/>
               </div>
-            }
+            : <div className='add-image'>
+              <div className="center">
+                <FileUploader
+                  accept="image/*"
+                  multiple
+                  name="avatar"
+                  randomizeFilename
+                  storageRef={firebase.storage().ref('images')}
+                  onUploadStart={ this.handleUploadStart }
+                  onUploadError={ this.handleUploadError }
+                  onUploadSuccess={ this.handleUploadSuccess }
+                  onProgress={ this.handleProgress }
+                  style={ uploadStyle }
+                >+ Photo
+                </FileUploader>
+              </div>
+            </div>
+          }
           <CardBody>
             <Form>
 
@@ -241,6 +228,7 @@ class addProduct extends React.Component {
                   <FormGroup>
                     <label>Product Title</label>
                     <Input
+                      defaultValue={this.state.title}
                       placeholder="Product Title"
                       type="text"
                       onChange={this.handleText}
@@ -253,6 +241,7 @@ class addProduct extends React.Component {
                   <FormGroup>
                     <label>Price</label>
                     <Input
+                      defaultValue={this.state.price}
                       placeholder="0.00"
                       type="nummeric"
                       onChange={this.handleText}
@@ -269,7 +258,7 @@ class addProduct extends React.Component {
                         <label>Maker's Name</label>
                         <Dropdown isOpen={this.state.makerNameDropdownOpen} toggle={this.toggle} size="md">
                           <DropdownToggle id="makerName" caret>
-                            {this.state.selectedMaker}
+                            {this.state.makerName}
                           </DropdownToggle>
                           <DropdownMenu>
                             {(this.state.allMakers).map((e,i)=>{
@@ -331,7 +320,7 @@ class addProduct extends React.Component {
                       <label>Staging Location</label>
                       <Dropdown isOpen={this.state.installLocationDropdownOpen} toggle={this.toggle} size="md">
                         <DropdownToggle id="installLocation" caret>
-                          Location
+                          {this.state.propertyName}
                         </DropdownToggle>
                         <DropdownMenu>
                           {(this.state.allProperties).map((e,i)=>{
@@ -350,7 +339,7 @@ class addProduct extends React.Component {
                       <ReactDatetime
                         inputProps={{
                           className: "form-control adjust",
-                          placeholder: "Pick Date"
+                          placeholder: this.state.installDate
                         }}
                         dateFormat='MM-DD-YYYY'
                         closeOnSelect= {true}
@@ -393,4 +382,4 @@ class addProduct extends React.Component {
   }
 }
 
-export default addProduct;
+export default editProduct;
