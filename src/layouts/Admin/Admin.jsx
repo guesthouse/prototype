@@ -7,7 +7,7 @@ import { Route, Switch } from "react-router-dom";
 import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-
+import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx'
 import routes from "routes.js";
 
 var ps;
@@ -70,7 +70,7 @@ class Admin extends React.Component {
       if (prop.layout === "/admin") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            exact path={prop.layout + prop.path}
             component={prop.component}
             key={key}
           />

@@ -2,6 +2,7 @@ import React from "react";
 import './Product.scss';
 import firebase from 'firebase';
 import AddProduct from './../../partials/addProduct/addProduct.jsx';
+import {Link} from 'react-router-dom';
 import {
   Button,
   Card,
@@ -119,33 +120,35 @@ class Product extends React.Component {
                 : <div className='flex-row'>
                     {(this.state.products).map((e,i)=>{
                       return (
-                        <div key={i}>
-                          <Card className="card-user-flex" md='4' >
-                            <div className="product-image">
-                              <img
-                                alt="..."
-                                src={e.data.imageURL}
-                              />
-                            </div>
-                          </Card>
-                        
-                          <a href="/product/detail" onClick={e => e.preventDefault()}>
-                            <Row>
-                              <Col className="ml-auto">
-                                <h5>
-                                  {e.data.title}
-                                </h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="mr-auto" >
-                                <h5 className={this.state.statusColor}>
-                                  {e.data.status}
-                                </h5>
-                              </Col>
-                            </Row>
-                          </a>
-                        </div>
+                        <Link to={`/admin/products/${e.id}`} key={i}>
+                          {/* <div> */}
+                            <Card className="card-user-flex" md='4' >
+                              <div className="product-image">
+                                <img
+                                  alt="..."
+                                  src={e.data.imageURL}
+                                />
+                              </div>
+                            </Card>
+                          
+                            <a href="/product/detail" onClick={e => e.preventDefault()}>
+                              <Row>
+                                <Col className="ml-auto">
+                                  <h5>
+                                    {e.data.title}
+                                  </h5>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col className="mr-auto" >
+                                  <h5 className={this.state.statusColor}>
+                                    {e.data.status}
+                                  </h5>
+                                </Col>
+                              </Row>
+                            </a>
+                          {/* </div> */}
+                        </Link>
                       )
                     })}
                   </div>

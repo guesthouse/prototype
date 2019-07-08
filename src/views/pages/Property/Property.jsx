@@ -111,7 +111,7 @@ class Property extends React.Component {
           {(this.state.properties).map((e,i)=>{
             return (
               <Col  md="4" key={i}>
-                <Link to={`/properties/${e.id}`} >
+                <Link to={`/admin/properties/${e.id}`} >
                   <Card className="card-user-flex">
                     <div className="image">
                       <img

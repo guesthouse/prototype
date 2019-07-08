@@ -12,56 +12,64 @@ const routes = [
     name: "Register",
     icon: "nc-icon nc-book-bookmark",
     component: Register,
-    layout: "/auth"
+    layout: "/auth",
+    display: 'false',
   },
   {
     path: "/user-profile",
     name: "Account & Settings",
     icon: "nc-icon nc-book-bookmark",
     component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    display: 'true',
   },
   {
-    path: "/property",
+    path: "/properties",
     name: "Homes",
     icon: "nc-icon nc-book-bookmark",
     component: Property,
-    layout: "/admin"
-  },
-  {
-    path: "/products",
-    name: "Products",
-    icon: "nc-icon nc-book-bookmark",
-    component: Product,
-    layout: "/admin"
+    layout: "/admin",
+    display: 'true',
   },
   {
     path: "/properties/:id",
     name: "Property Detail",
     icon: "nc-icon nc-book-bookmark",
     component: PropertyDetail,
-    layout: "/admin"
+    layout: "/admin",
+    display: 'false'
   },
   {
-    path: "/productdetails",
+    path: "/products",
+    name: "Products",
+    icon: "nc-icon nc-book-bookmark",
+    component: Product,
+    layout: "/admin",
+    display: 'true',
+  },
+  {
+    path: "/products/:id",
     name: "Product Detail",
     icon: "nc-icon nc-book-bookmark",
     component: ProductDetail,
-    layout: "/admin"
+    layout: "/admin",
+    display: 'false'
   },
   {
     path: "/photos",
     name: "Photos",
     icon: "nc-icon nc-book-bookmark",
     component: ProductDetail,
-    layout: "/admin"
+    layout: "/admin",
+    display: 'true'
   },
   {
     path: "/login",
     name: "Login",
     icon: "nc-icon nc-book-bookmark",
     component: Login,
-    layout: '/auth'
+    layout: '/auth',
+    display: 'false'
   }
 
 ]

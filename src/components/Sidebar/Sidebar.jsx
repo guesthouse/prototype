@@ -91,7 +91,8 @@ class Sidebar extends React.Component {
         );
       }
       return (
-        <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
+        ( prop.display === 'true' )
+        ?<li className={this.activeRoute(prop.layout + prop.path)} key={key}>
           <NavLink to={prop.layout + prop.path} activeClassName="">
             {prop.icon !== undefined ? (
               <>
@@ -106,6 +107,7 @@ class Sidebar extends React.Component {
             )}
           </NavLink>
         </li>
+        : null
       );
     });
   };
@@ -133,7 +135,7 @@ class Sidebar extends React.Component {
     return (
       <div
         className="sidebar"
-        // data-color={this.props.bgColor}
+        data-color={this.props.bgColor}
         data-active-color={this.props.activeColor}
       >
         <div className="logo">

@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import AuthLayout from "layouts/Auth/Auth.jsx";
 import AdminLayout from "layouts/Admin/Admin.jsx";
 import BuildProfile from 'views/pages/BuildProfile/BuildProfile.jsx';
+import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss";
@@ -29,7 +30,7 @@ ReactDOM.render(
       <Route path="/auth" render={props => <AuthLayout {...props} />} />
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
       <Route path="/buildprofile" render={props => <BuildProfile {...props} />} />
-      <Redirect from="/" to="/auth/register" />
+      {/* <Redirect from="/" to="/auth/login" /> */}
     </Switch>
   </Router>,
   document.getElementById("root")
