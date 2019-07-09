@@ -62,22 +62,21 @@ class Photos extends React.Component {
     return (
       <div className="view-photos"> 
         {this.state.moduleVisibility == 'showBase' 
-            ? <div className='flex-row'>
-                {(this.state.photos).map((e,i)=>{
+          ? <div className='flex-row'>
+              {(this.state.photos).map((e,i)=>{
                 return (
-                    <Card className="card-user-flex" md='4' key={i}>
-                        <div className="property-image">
-                        <img
-                            alt="..."
-                            src={e.imageURL}
-                        />
-                        </div>
-                    </Card>
+                  <Card className="card-user-flex" md='4' key={i}>
+                    <div className="property-image">
+                      <img
+                        alt="..."
+                        src={e.imageURL}
+                      />
+                    </div>
+                  </Card>
                 )
-                })}
+              })}
             </div>
-            : <AddPhotos user={this.state.user} closeModal={this.toggleVisbility}>        
-            </AddPhotos>
+          : <AddPhotos user={this.state.user} closeModal={this.toggleVisbility}/>
         }
       </div>
     );
