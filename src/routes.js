@@ -4,7 +4,8 @@ import UserProfile from "views/pages/UserProfile.jsx";
 import Product from 'views/pages/Product/Product.jsx';
 import Property from 'views/pages/Property/Property.jsx';
 import ProductDetail from 'views/pages/ProductDetail/ProductDetail.jsx';
-import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx'
+import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx';
+import Photos from 'views/pages/Photos/Photos.jsx'
 
 const routes = [
   {
@@ -59,7 +60,7 @@ const routes = [
     path: "/photos",
     name: "Photos",
     icon: "nc-icon nc-book-bookmark",
-    component: ProductDetail,
+    component: Photos,
     layout: "/admin",
     display: 'true'
   },
