@@ -23,10 +23,8 @@ class Property extends React.Component {
     this.state = {
       properties: [],
       statusColor: 'available',
-      moduleVisibility: 'hideBase'
+      moduleVisibility: 'showBase'
     }
-
-    // this.toggleVisbility = this.toggleVisbility.bind(this)
   }
 
   toggleVisbility = () => {

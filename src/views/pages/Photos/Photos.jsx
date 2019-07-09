@@ -65,13 +65,13 @@ class Photos extends React.Component {
           ? <div className='flex-row'>
               {(this.state.photos).map((e,i)=>{
                 return (
-                  <Card className="card-user-flex" md='4' key={i}>
-                    <div className="property-image">
+                  <Card className="card-user-flex spaced" md='4' key={i}>
+                    {/* <div className="image-container"> */}
                       <img
                         alt="..."
                         src={e.imageURL}
                       />
-                    </div>
+                    {/* </div> */}
                   </Card>
                 )
               })}
