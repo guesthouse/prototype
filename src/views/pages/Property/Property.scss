@@ -1,16 +1,25 @@
 .property {
-    min-height: 100vh;
-    margin-top: 50px;
-    padding: 20px;
-    .zero {
-        margin-top: 100px;
-        text-align: center;
+  min-height: 100vh;
+  margin-top: 50px;
+  padding: 20px;
+  .zero {
+    margin-top: 100px;
+    text-align: center;
+  }
+  .flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;    
+  }
+
+  .property-image {
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
     }
-    .flex-row{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        
-    }
-}
+  }
+} 

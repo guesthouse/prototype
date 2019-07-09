@@ -1,6 +1,10 @@
 import React from "react";
 import './addProperty.scss';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
+import FileUploader from 'react-firebase-file-uploader/lib/CustomUploadButton';
+import ReactDatetime from "react-datetime";
 import {
   Button,
   Card,
@@ -22,49 +26,147 @@ class AddProperty extends React.Component {
   constructor(){
     super()
     this.state = {
-      property: {},
+      bedNumberDropdownOpen: false,
+      bathNuberDropdownOpen: false,
+      installStatusDropdownOpen: false,
+      propertyTypeDropdownOpen: false,
+      agentNameDropdownOpen: false,
+
+      user : {role: 'super'},
       rooms: [],
-      showAddModal: false,
-      dropdownOpen: false,
-      dropdownOpenMakers: false,
-      furnitureType: 'Furniture',
+      address: '',
+      bathNumber: 'Bath Number',
+      bedNumber: 'Bed Number',
+      description: '',
+      listingPrice: '',
+      propertyType: 'Property Type',
+      propertyURL: '',
+      stageDate: '',
+      status: '',
+      imageURL: null,
+      additionalInfo: '',
+      selectedAgent: 'Listing Agent',
+      allAgents: [],
+      agentID: '',
+      agentName: '',
 
       roomName: '',
       roomSize: '',
       furnitureItems: [],
-      makers: []
-
     }
 
-    this.toggle = this.toggle.bind(this);
-    this.toggleMakers = this.toggleMakers.bind(this)
-    this.showAdd = this.showAdd.bind(this);
-    this.hideAdd = this.hideAdd.bind(this);
+    this.handleUploadState = this.handleUploadStart.bind(this)
+    this.handleProgress = this.handleProgress.bind(this)
+    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
+
+    this.handleText = this.handleText.bind(this)
+    this.setInstallDate = this.setInstallDate.bind(this)
+    this.setAgent = this.setAgent.bind(this)
+    this.setType = this.setType.bind(this)
+    this.setLocation = this.setLocation.bind(this)
+    this.setStatus = this.setStatus.bind(this)
+    this.saveProduct = this.saveProduct.bind(this)
   }
 
-  showAdd(){
-    const db = firebase.firestore();
-    let accountRef = db.collection('users').doc()
+  handleUploadStart = () => this.setState({isUploading: true, progress: 0});
+
+  handleProgress = (progress) => this.setState({progress});
+
+  handleUploadError = (error) => {
     this.setState({
-      showAddModal: true,
+      isUploading: false});
+    console.error(error);
+  }
+
+  handleUploadSuccess = (filename) => {
+    this.setState({
+      avatar: filename, 
+      progress: 100,
+      isUploading: false
+    });
+
+    firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({
+        imageURL: url
+      })
+    );
+  };
+
+  
+  handleText = (e) => {
+    e.preventDefault()
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  toggle = (e) => {
+    var singleDropdown = [e.target.id] + 'DropdownOpen';
+    this.setState(prevState => ({
+     [singleDropdown]: !prevState.singleDropdown,
+    }));
+  }
+
+  setAgent = (e) => {
+    console.log (e.target.innerHTML)
+    this.setState ({
+      agentID: e.target.id,
+      agentName: e.target.innerHTML
     });
   };
 
-  hideAdd(){
+  setType = (e) => {
+    console.log(e.target.innerHTML)
     this.setState({
-      showAddModal: false,
+      productType: e.target.innerHTML
     });
   };
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen,
-    }));
-  }
-  toggleMakers() {
-    this.setState(prevState => ({
-      dropdownOpenMakers: !prevState.dropdownOpenMakers,
-    }));
+  setLocation = (e) => {
+    console.log (e.target.id, e.target.innerHTML)
+    this.setState({
+      propertyID: e.target.id,
+      propertyName: e.target.innerHTML
+    });
+  };
+  
+  setStatus = (e) => {
+    console.log (e.target.innerHTML)
+    this.setState({
+      status: e.target.innerHTML
+    });
+  };
+
+  setInstallDate = (e) => {
+    var date = e.toDate();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var year = date.getFullYear();
+    var picked = month + '/' + day + '/' + year;
+    this.setState({installDate: picked});
+  } 
+
+  saveProduct = () => {
+    const db = firebase.firestore()
+    db.collection('products').doc().set({
+      title: this.state.title,
+      price: this.state.price,
+      productType: this.state.productType,
+      makerName: this.state.makerName,
+      makerID: this.state.makerID,
+      propertyName: this.state.propertyName,
+      propertyID: this.state.propertyID,
+      installDate: this.state.installDate,
+      notes: this.state.notes,
+      imageURL: this.state.imageURL,
+      status: this.state.status,
+      archived: false
+    }).then((docRef) => {
+      this.props.closeModal();
+    })
+    .catch(function(error) {
+      // expose error to user
+      console.error("Error adding document: ", error);
+    });
   }
 
   getMakersAndFurniture(){
@@ -85,442 +187,244 @@ class AddProperty extends React.Component {
   componentDidMount() {
     const db = firebase.firestore();
     const userList = []
-    let accountRef = db.collection('users').where("userRole", "==", 'Maker' )
+    let accountRef = db.collection('users').where("userRole", "==", 'Real Estate Agent' )
     accountRef.get().then( snap => {
       snap.forEach((doc)=>{
-        let user = {id: doc.id, data: doc.data()}
+        let user = {id: doc.id, fullname: doc.data().fullname}
         userList.push(user);
       });
       this.setState({
-        makers: userList
+        allAgents: userList
       });
     });
-    // No user is signed in. route to register
   }
+
   render() {
+    let uploadStyle = { 
+      width: '100px', 
+      height: '100px', 
+      fontSize:'18px', 
+      color: 'white',
+      padding: 15, 
+      margin:'auto', 
+      borderRadius: 5, 
+      cursor: 'pointer',
+      border: 'solid 2px white',
+      textAlign: 'center'
+    }
     return (
       <div className="addProperty">
-        <Row>
-            <Col md="6" sm={{size: "6"}}>
-              <Card className="card-details">
-                <div className="image">
-                  <img
-                    alt="..."
-                    src={require("assets/img/bg/damir-bosnjak.jpg")}
-                  />
-                </div>
-                <CardBody>
-                  <Form>
-                    <Row>
-                      <Col className="pr-1" md="8">
-                        <FormGroup>
-                          <label>Address</label>
-                          <Input
-                            // defaultValue={this.state.user.businessName}
-                            placeholder="Address"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pr-1" md="4">
-                      <div  className="button-align">
-                        <Button>Listing URL</Button>
-                      </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>Type</label>
-                          <Input
-                            // defaultValue={this.state.user.firstname}
-                            placeholder="Company"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label>Description</label>
-                          <Input
-                            // defaultValue={this.state.user.lastname}
-                            placeholder="Last Name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <h5>Details</h5>
-                    <Row>
-                      <Col md="4">
-                          <Input
-                            // defaultValue={this.state.user.location}
-                            placeholder="Bed Number"
-                            type="text"
-                          />
-                      </Col>
-                      <Col md="4">
-                          <Input
-                            // defaultValue={this.state.user.location}
-                            placeholder="Bath Number"
-                            type="text"
-                          />
-                      </Col>
-                      <Col md="4">
-                          <Input
-                            // defaultValue={this.state.user.location}
-                            placeholder="Date For Staging"
-                            type="text"
-                          />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md="12">
-                        <FormGroup>
-                          <label>Additional Information</label>
-                          <Input
-                            className="textarea"
-                            type="textarea"
-                            cols="80"
-                            rows="4"
-                            // defaultValue={this.state.user.additionalInfo}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </Form>
-                </CardBody>
-              </Card>
-            </Col>
-            { this.state.showAddModal === false &&
-              <Col sm={{size:"2", offset:1}}>
-                  <Card className="card-add" onClick={this.showAdd}>
-                    <CardBody>
-                      <div className="circle" onClick={this.showAdd}>
-                      </div>
-                      <span>Add Room</span>
-                    </CardBody>
-                  </Card>
-              </Col>
-            }
-            { this.state.showAddModal === true &&
-                <Col sm={{size:"6"}}>
-                  <Card className="card-add-info">
-                    <CardBody>
-                      <Row>
-                        <Col>
-                          <div className="close" onClick={this.hideAdd}>X</div>
-                        </Col>
-                      </Row>
+        {/* <Col md="6" sm={{size: "6"}}> */}
+          <Card className="add-card">
+          { this.state.imageURL != null
+            ? <div className="image-container">
+                <img src={this.state.imageURL} alt='maker uploaded product' className="product"/>
+              </div>
+            : <div className='add-image'>
+              <div className="center">
+                <FileUploader
+                  accept="image/*"
+                  multiple
+                  name="avatar"
+                  randomizeFilename
+                  storageRef={firebase.storage().ref('images')}
+                  onUploadStart={ this.handleUploadStart }
+                  onUploadError={ this.handleUploadError }
+                  onUploadSuccess={ this.handleUploadSuccess }
+                  onProgress={ this.handleProgress }
+                  style={ uploadStyle }
+                >+ Photo
+                </FileUploader>
+              </div>
+            </div>
+          }
+            <CardBody>
+              <Form>
+                <Row>
+                  <Col className="pr-1" md="8">
+                    <FormGroup>
+                      <label>Address</label>
+                      <Input
+                        placeholder="Address"
+                        type="text"
+                        onChange={this.handleText}
+                        id="address"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-1" md="4">
+                    <FormGroup>
+                      <label>Listing URL</label>
+                      <Input
+                        placeholder="Address"
+                        type="text"
+                        onChange={this.handleText}
+                        id="propertyURL"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="pr-1" md="6">
+                    <FormGroup>
+                      <label>Type</label>
+                      <Input
+                        placeholder="Property Type"
+                        type="text"
+                        onChange={this.handleText}
+                        id="propertyType"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pl-1" md="6">
+                    <FormGroup>
+                      <label>Description</label>
+                      <Input
+                        // defaultValue={this.state.user.lastname}
+                        placeholder="Description"
+                        type="text"
+                        onChange={this.handleText}
+                        id="description"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
 
-                      <Row>
-                        <Col md="12">
-                          <FormGroup>
-                            <label>Room Name</label>
-                            <Input
-                              className="text"
-                              // defaultValue={this.state.user.additionalInfo}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                <Row>
+                  <Col md="4">
+                    <FormGroup className="add-dropdown">
+                      <label>Property Type</label>
+                      <Dropdown isOpen={this.state.propertyTypeDropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle id="propertyType" caret>
+                          {this.state.propertyType}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={this.setType}>Sigle Family</DropdownItem>
+                          <DropdownItem onClick={this.setType}>Townhouse </DropdownItem>
+                          <DropdownItem onClick={this.setType}>Condo</DropdownItem>
+                          <DropdownItem onClick={this.setType}>Apartment</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                    </FormGroup>
+                  </Col>
 
-                       <Row>
-                        <Col md="6">
-                          <FormGroup>
-                            <label>Room Name</label>
-                            <Input
-                              className="text"
-                            />
-                          </FormGroup>
-                        </Col>
+                  <Col md="4">
+                    <FormGroup className="add-dropdown">
+                      <label>Bedrooms</label>
+                      <Dropdown isOpen={this.state.bedNumberDropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle id="bedNumber" caret>
+                          {this.state.bedNumber}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>1</DropdownItem>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>2</DropdownItem>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>3</DropdownItem>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>4</DropdownItem>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>5</DropdownItem>
+                          <DropdownItem onClick={this.setBedNumberr} id='1'>6</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                    </FormGroup>
+                  </Col>
 
-                        <Col md="6">
-                          <FormGroup>
-                            <label>Room Square Footage</label>
-                            <Input
-                              className="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                  <Col md="4">
+                    <FormGroup className="add-dropdown">
+                      <label>Bathrooms</label>
+                      <Dropdown isOpen={this.state.bathNumberDropdownOpen} toggle={this.toggle} size="md">
+                        <DropdownToggle id="bathNumber" caret>
+                          {this.state.bathNumber}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>1</DropdownItem>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>2</DropdownItem>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>3</DropdownItem>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>4</DropdownItem>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>5</DropdownItem>
+                          <DropdownItem onClick={this.setBathNumberr} id='1'>6</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+                    </FormGroup>
+                  </Col>
+                </Row>
 
-                      <Row>
-                        <Col md="6">
-                          <FormGroup>
-                            <label>Furniture</label>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} size="md">
-                              <DropdownToggle caret>
-                                {this.state.furnitureType}
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem onClick={this.setType}>Coffe Table</DropdownItem>
-                                <DropdownItem onClick={this.setType}>Night Stand</DropdownItem>
-                                <DropdownItem onClick={this.setType}>Carpets/Rugs</DropdownItem>
-                                <DropdownItem onClick={this.setType}>Sofas</DropdownItem>
-                                <DropdownItem onClick={this.setType}>Lighting</DropdownItem>
-                                <DropdownItem onClick={this.setType}>Artwork </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </FormGroup>
-                        </Col>
-
-                        <Col md="6">
-                          <FormGroup>
-                            <label>Makers</label>
-                            <Dropdown isOpen={this.state.dropdownOpenMakers} toggle={this.toggleMakers} size="md">
-                              <DropdownToggle caret>
-                                Makers
-                              </DropdownToggle>
-                              <DropdownMenu>
-                              {(this.state.makers).map((e,i)=>{
+                <Row>
+                  { this.state.user.role === 'super'
+                    ? <Col md="4" >
+                        <FormGroup className="add-dropdown">
+                          <label>Agent's Name</label>
+                          <Dropdown isOpen={this.state.agentNameDropdownOpen} toggle={this.toggle} size="md">
+                            <DropdownToggle id="makerName" caret>
+                              {this.state.selectedAgent}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              {(this.state.allAgents).map((e,i)=>{
                                 return (
-                                <DropdownItem onClick={this.setType} key={i}>{e.data.firstname} {e.data.lastname}</DropdownItem>
-                              )})};
-                              </DropdownMenu>
-                            </Dropdown>
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                                <DropdownItem onClick={this.setAgent} key={i} id={e.id}>{e.fullName}</DropdownItem>
+                                )
+                              })}
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                      </Col>
+                    : null 
+                  }
 
-                      <Row>
-                        <Col md="12">
-                          <FormGroup>
-                            <label>Notes</label>
-                            <Input
-                              className="textarea"
-                              type="textarea"
-                              cols="80"
-                              rows="4"
-                              // defaultValue={this.state.user.additionalInfo}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                  <Col md="4" >
+                    <FormGroup className="add-dropdown">
+                      <label>Install Date</label>
+                      <ReactDatetime
+                        inputProps={{
+                          className: "form-control adjust",
+                          placeholder: "Pick Date"
+                        }}
+                        dateFormat='MM-DD-YYYY'
+                        closeOnSelect= {true}
+                        onChange= {this.setInstallDate}
+                        timeFormat={false}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md="12">
+                    <FormGroup>
+                      <label>Additional Information</label>
+                      <Input
+                        className="textarea"
+                        type="textarea"
+                        cols="80"
+                        rows="4"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
 
-                      <Row>
-                        <Col  md="12">
-                          <Button>Add Room</Button>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-            }
-          </Row>
-{/* loop over rooms here */}
+                { this.state.user.role === 'super'
+                  ? <Row>
+                    <Col  md="12">
+                      <FormGroup>
+                        <label>Notes</label>
+                        <Input
+                          type="textarea"
+                          cols="80"
+                          rows="8"
+                          id="notes"
+                      />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  : null
+                }
 
-{(this.state.rooms).map((e,i)=>{
-  return (
-    <div></div>
-  ) 
-})}
-          <Row>
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Living Room</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
+                 <Row>
+                  <Button className='btn-center' onClick={this.saveProduct}>Save Property</Button>
+                </Row>
 
-                </CardBody>
-              </Card>
-            </Col>
+              </Form>
+            </CardBody>
+          </Card>
 
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Kitchen</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Dining Room</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                      
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Master Bed</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-            
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+       
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React from "react";
 import './Property.scss';
 import firebase from 'firebase';
 import {Link} from 'react-router-dom';
+import AddProperty from './../../partials/addProperty/addProperty.jsx';
 import {
   Button,
   Card,
@@ -21,9 +22,23 @@ class Property extends React.Component {
 
     this.state = {
       properties: [],
-      statusColor: 'available'
+      statusColor: 'available',
+      moduleVisibility: 'hideBase'
     }
+
+    // this.toggleVisbility = this.toggleVisbility.bind(this)
   }
+
+  toggleVisbility = () => {
+    this.state.moduleVisibility === 'showBase' 
+    ? this.setState({
+        moduleVisibility: 'hideBase'
+      })
+    : this.setState({
+      moduleVisibility: 'showBase'
+    })
+  }
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -54,6 +69,8 @@ class Property extends React.Component {
   render() {
     return (
       <div className="property"> 
+      {this.state.moduleVisibility == 'showBase' 
+        ? <div>
         <Col lg="3" md="3" sm={{size: "3", offset: 9}}>
           <UncontrolledDropdown>
             <DropdownToggle
@@ -79,78 +96,67 @@ class Property extends React.Component {
                 Properties Overview
               </DropdownItem>
               <DropdownItem
-                href="#pablo"
-                onClick={e => e.preventDefault()}
+                onClick={this.toggleVisbility}
               >
                 Add Property
-              </DropdownItem>
-              <DropdownItem
-                href="#pablo"
-                onClick={e => e.preventDefault()}
-              >
-                History
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Col>
 
-        { this.state.properties.length === 0 &&
-          <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
-            <h3 className='zero'>
-              You Currently Do Not Have Any Properties
-            </h3>
-            <Col sm={{size: "6", offset: 4}}>
-              <Button className="btn-round" sm={{size: "6", offset: 4}}color="primary">
-                  + Add Property
-              </Button>
+        { this.state.properties.length === 0 
+          ? <Col lg="6" md="6" sm={{size: "6", offset: 3}}>
+              <h3 className='zero'>
+                You Currently Do Not Have Any Properties
+              </h3>
+              <Col sm={{size: "6", offset: 4}}>
+                <Button className="btn-round" sm={{size: "6", offset: 4}}color="primary">
+                    + Add Property
+                </Button>
+              </Col>
             </Col>
-          </Col>
-        }
-
-        <div className='flex-row'>
-          {(this.state.properties).map((e,i)=>{
-            return (
-              <Col  md="4" key={i}>
-                <Link to={`/admin/properties/${e.id}`} >
-                  <Card className="card-user-flex">
-                    <div className="image">
+          : <div className='flex-row'>
+            {(this.state.properties).map((e,i)=>{
+              return (
+                <Link to={`/admin/properties/${e.id}`}key={i} >
+                  <Card className="card-user-flex" md='4'>
+                    <div className="property-image">
                       <img
                         alt="..."
-                        src={require("assets/img/bg/damir-bosnjak.jpg")}
+                        src={e.data.imageURL}
                       />
                     </div>
-                    <CardBody className='card-body'>
-                      <div className="button-container">
-                        <Row>
-                          <Col>
-                            <h5>
-                              {e.data.address}
-                            </h5>
-                          </Col>
-                        </Row>
-
-                        <Row>    
-                          <Col>
-                            <h5 className={this.state.statusColor}>
-                              {e.data.status}
-                            </h5>
-                          </Col>
-                        </Row>
-
-                        <Row>
-                          <Col></Col>
-                          <Col>
-                            <h5>{this.state.fullname}</h5> 
-                          </Col>
-                        </Row>
-                      </div>
-                    </CardBody>
                   </Card>
+                  <Row>
+                    <Col className="ml-auto">
+                      <h5>
+                        {e.data.address}
+                      </h5>
+                    </Col>
+                  </Row>
+
+                  <Row>    
+                    <Col className="ml-auto">
+                      <h5 className={this.state.statusColor}>
+                        {e.data.status}
+                      </h5>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col  className="mr-auto">
+                      <h5>{this.state.fullname}</h5> 
+                    </Col>
+                  </Row>
                 </Link>
-              </Col>
-            )
+              )
             })}
           </div>
+        }
+          </div>
+          : <AddProperty user={this.state.user} closeModal={this.toggleVisbility}>        
+           </AddProperty>
+        }
       </div>
     );
   }

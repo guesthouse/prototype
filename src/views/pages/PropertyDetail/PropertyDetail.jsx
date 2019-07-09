@@ -99,6 +99,7 @@ class PropertyDetail extends React.Component {
         propertyURL: data.propertyURL,
         stageDate: data.stageDate,
         status: data.status,
+        imageURL: data.imageURL,
         additionalInfo: data.additionalInfo
       });
     });
@@ -124,7 +125,7 @@ class PropertyDetail extends React.Component {
                 <div className="image">
                   <img
                     alt="..."
-                    src={require("assets/img/bg/damir-bosnjak.jpg")}
+                    src={this.state.imageURL}
                   />
                 </div>
                 <CardBody>
