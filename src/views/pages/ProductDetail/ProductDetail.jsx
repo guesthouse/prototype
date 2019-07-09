@@ -54,11 +54,10 @@ class addProduct extends React.Component {
   }
 
   componentDidMount() {
+    let productID = this.props.match.params.id
     let productList = []
-    let userList = []
-    console.log(this.props)
     const db = firebase.firestore();
-    db.collection('products').doc('8Lb624NAbtnwPEbUkyxc').get().then( doc => {
+    db.collection('products').doc(productID).get().then( doc => {
       let data = doc.data();
       this.setState({
         title: data.title,

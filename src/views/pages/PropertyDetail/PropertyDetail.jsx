@@ -83,7 +83,26 @@ class PropertyDetail extends React.Component {
   }
 
   componentDidMount() {
+    let propertyID = this.props.match.params.id
     const db = firebase.firestore();
+
+    db.collection('properties').doc(propertyID).get().then( doc => {
+      let data = doc.data();
+      this.setState({
+        account_id: data.account_id,
+        address: data.address,
+        bathNumber: data.bathNumber,
+        bedNumber: data.bedNumber,
+        description: data.description,
+        listingPrice: data.listingPrice,
+        propertyType: data.propertyType,
+        propertyURL: data.propertyURL,
+        stageDate: data.stageDate,
+        status: data.status,
+        additionalInfo: data.additionalInfo
+      });
+    });
+
     const userList = []
     let accountRef = db.collection('users').where("userRole", "==", 'Maker' )
     accountRef.get().then( snap => {
@@ -95,7 +114,6 @@ class PropertyDetail extends React.Component {
         makers: userList
       });
     });
-    // No user is signed in. route to register
   }
   render() {
     return (

@@ -121,33 +121,29 @@ class Product extends React.Component {
                     {(this.state.products).map((e,i)=>{
                       return (
                         <Link to={`/admin/products/${e.id}`} key={i}>
-                          {/* <div> */}
-                            <Card className="card-user-flex" md='4' >
-                              <div className="product-image">
-                                <img
-                                  alt="..."
-                                  src={e.data.imageURL}
-                                />
-                              </div>
-                            </Card>
-                          
-                            <a href="/product/detail" onClick={e => e.preventDefault()}>
-                              <Row>
-                                <Col className="ml-auto">
-                                  <h5>
-                                    {e.data.title}
-                                  </h5>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col className="mr-auto" >
-                                  <h5 className={this.state.statusColor}>
-                                    {e.data.status}
-                                  </h5>
-                                </Col>
-                              </Row>
-                            </a>
-                          {/* </div> */}
+                          <Card className="card-user-flex" md='4' >
+                            <div className="product-image">
+                              <img
+                                alt="..."
+                                src={e.data.imageURL}
+                              />
+                            </div>
+                          </Card>
+                        
+                          <Row>
+                            <Col className="ml-auto">
+                              <h5>
+                                {e.data.title}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="mr-auto" >
+                              <h5 className={this.state.statusColor}>
+                                {e.data.status}
+                              </h5>
+                            </Col>
+                          </Row>
                         </Link>
                       )
                     })}

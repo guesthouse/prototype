@@ -7,7 +7,6 @@ import { Route, Switch } from "react-router-dom";
 import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx'
 import routes from "routes.js";
 
 var ps;
@@ -24,7 +23,7 @@ class Admin extends React.Component {
   }
 
   setUserRole = ( user ) => {
-    if ( user.user_role == 'agent' ){
+    if ( user.user_role === 'agent' ){
     }
   }
   componentDidMount() {
