@@ -82,6 +82,17 @@ class PropertyDetail extends React.Component {
       });
   }
 
+  
+  toggleVisbility = () => {
+    this.state.moduleVisibility === 'showBase' 
+    ? this.setState({
+        moduleVisibility: 'hideBase'
+      })
+    : this.setState({
+      moduleVisibility: 'showBase'
+    })
+  }
+
   componentDidMount() {
     let propertyID = this.props.match.params.id
     const db = firebase.firestore();
@@ -186,6 +197,10 @@ class PropertyDetail extends React.Component {
                           <p>{this.state.additionalInfo}</p>
                         </FormGroup>
                       </Col>
+                    </Row>
+
+                    <Row>
+                      <Button className='btn-center' onClick={this.toggleVisbility}>Edit Property</Button>
                     </Row>
                   </Form>
                 </CardBody>
@@ -339,177 +354,6 @@ class PropertyDetail extends React.Component {
                       </Row>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Kitchen</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Dining Room</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                      
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Master Bed</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-            
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
                   <Row>
                     <Col  md="12">
                       <span>Notes:</span>
