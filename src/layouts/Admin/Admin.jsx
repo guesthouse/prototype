@@ -2,7 +2,7 @@ import React from "react";
 import firebase from 'firebase'
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -104,7 +104,10 @@ class Admin extends React.Component {
         />
         <div className="main-panel" ref="mainPanel">
           <AdminNavbar {...this.props} handleMiniClick={this.handleMiniClick} />
-          <Switch>{this.getRoutes(routes)}</Switch>
+          <Switch>
+            {this.getRoutes(routes)}
+            <Redirect exact from="/admin" to="/admin/properties" />
+          </Switch>
           {// we don't want the Footer to be rendered on full screen maps page
           this.props.location.pathname.indexOf("full-screen-map") !==
           -1 ? null : (

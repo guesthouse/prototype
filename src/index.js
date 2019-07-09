@@ -30,7 +30,7 @@ ReactDOM.render(
       <Route path="/auth" render={props => <AuthLayout {...props} />} />
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
       <Route path="/buildprofile" render={props => <BuildProfile {...props} />} />
-      {/* <Redirect from="/" to="/auth/login" /> */}
+      <Redirect from="/"  to="/auth/login" />
     </Switch>
   </Router>,
   document.getElementById("root")

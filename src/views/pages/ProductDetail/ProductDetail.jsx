@@ -70,7 +70,8 @@ class addProduct extends React.Component {
         installDate: data.installDate,
         notes: data.notes,
         imageURL: data.imageURL,
-        archived: data.archived
+        archived: data.archived,
+        productID: productID
       });
     });
   }
@@ -164,7 +165,7 @@ class addProduct extends React.Component {
             </CardBody>
           </Card>
         </div>
-        : <EditProduct product={this.state}></EditProduct>
+        : <EditProduct product={this.state} closeModal={this.toggleVisbility}></EditProduct>
         }
       </div>
     );

@@ -141,28 +141,27 @@ class editProduct extends React.Component {
   } 
 
   saveProduct = () => {
+    let productID = this.props.product.productID
     const db = firebase.firestore()
-    console.log(this.state)
-    // db.collection('products').doc().set({
-    //   title: this.state.title,
-    //   price: this.state.price,
-    //   productType: this.state.productType,
-    //   makerName: this.state.makerName,
-    //   makerID: this.state.makerID,
-    //   propertyName: this.state.propertyName,
-    //   propertyID: this.state.propertyID,
-    //   installDate: this.state.installDate,
-    //   notes: this.state.notes,
-    //   imageURL: this.state.imageURL,
-    //   archived: false
-    // }).then(function(docRef) {
-    //   // call method from parent coponent to change state and close edit
-    //   console.log('product successfully added')
-    // })
-    // .catch(function(error) {
-    //   // expose error to user
-    //   console.error("Error adding document: ", error);
-    // });
+    db.collection('products').doc(productID).update({
+      title: this.state.title,
+      price: this.state.price,
+      productType: this.state.productType,
+      makerName: this.state.makerName,
+      makerID: this.state.makerID,
+      propertyName: this.state.propertyName,
+      propertyID: this.state.propertyID,
+      installDate: this.state.installDate,
+      notes: this.state.notes,
+      imageURL: this.state.imageURL,
+      archived: false
+    }).then( (docRef) => {
+      this.props.closeModal();
+    })
+    .catch(function(error) {
+      // expose error to user
+      console.error("Error adding document: ", error);
+    });
   }
 
   componentDidMount() {
@@ -358,9 +357,11 @@ class editProduct extends React.Component {
                     <FormGroup>
                       <label>Notes</label>
                       <Input
+                        defaultValue={this.state.notes}
                         type="textarea"
                         cols="80"
                         rows="8"
+                        onChange={this.handleText}
                         id="notes"
                     />
                     </FormGroup>
@@ -370,7 +371,7 @@ class editProduct extends React.Component {
               }
 
               <Row>
-                <Button className='btn-center' onClick={this.saveProduct}>Save Product</Button>
+                <Button className='btn-center' onClick={this.saveProduct}>Save Changes</Button>
               </Row>
 
             </Form>
