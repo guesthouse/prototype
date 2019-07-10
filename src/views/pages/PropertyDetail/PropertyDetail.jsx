@@ -206,8 +206,8 @@ class PropertyDetail extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            { this.state.showAddModal === false &&
-              <Col sm={{size:"2", offset:1}}>
+            { this.state.showAddModal === false 
+              ? <Col sm={{size:"2", offset:1}}>
                   <Card className="card-add" onClick={this.showAdd}>
                     <CardBody>
                       <div className="circle" onClick={this.showAdd}>
@@ -215,10 +215,9 @@ class PropertyDetail extends React.Component {
                       <span>Add Room</span>
                     </CardBody>
                   </Card>
-              </Col>
-            }
-            { this.state.showAddModal === true &&
-                <Col sm={{size:"6"}}>
+                </Col>
+            
+              : <Col sm={{size:"6"}}>
                   <Card className="card-add-info">
                     <CardBody>
                       <Row>

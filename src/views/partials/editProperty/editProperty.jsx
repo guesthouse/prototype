@@ -187,8 +187,8 @@ class EditProperty extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            { this.state.showAddModal === false &&
-              <Col sm={{size:"2", offset:1}}>
+            { this.state.showAddModal === false
+              ? <Col sm={{size:"2", offset:1}}>
                   <Card className="card-add" onClick={this.showAdd}>
                     <CardBody>
                       <div className="circle" onClick={this.showAdd}>
@@ -196,10 +196,9 @@ class EditProperty extends React.Component {
                       <span>Add Room</span>
                     </CardBody>
                   </Card>
-              </Col>
-            }
-            { this.state.showAddModal === true &&
-                <Col sm={{size:"6"}}>
+                </Col>
+
+              :  <Col sm={{size:"6"}}>
                   <Card className="card-add-info">
                     <CardBody>
                       <Row>
@@ -220,7 +219,7 @@ class EditProperty extends React.Component {
                         </Col>
                       </Row>
 
-                       <Row>
+                      <Row>
                         <Col md="6">
                           <FormGroup>
                             <label>Room Name</label>
@@ -303,219 +302,47 @@ class EditProperty extends React.Component {
                 </Col>
             }
           </Row>
-{/* loop over rooms here */}
+          
+          {/* loop over rooms here */}
 
-{(this.state.rooms).map((e,i)=>{
-  return (
-    <div></div>
-  ) 
-})}
-          <Row>
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Living Room</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
+          {(this.state.rooms).map((e,i)=>{
+            return (
+              <Col sm={{size:"4"}}>
+                <Card>
+                  <CardHeader>Living Room</CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col  md="12">
+                        <span>Room Size: 150 SF</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col  md="12">
+                        <span>Furniture Items:</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col  md="12">
+                        <span>Makers:</span>
+                        <Row>
+                          <div className='makerHolder'></div>
+                          <div className='makerHolder'></div>
+                          <div className='makerHolder'></div>
+                        </Row>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col  md="12">
+                        <span>Notes:</span>
+                      </Col>
+                    </Row>
 
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Kitchen</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Dining Room</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                      
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Master Bed</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-            
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm={{size:"4"}}>
-              <Card>
-                <CardHeader>Room Name</CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col  md="12">
-                      <span>Room Size: 150 SF</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Furniture Items:</span>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col  md="12">
-                      <span>Makers:</span>
-                      <Row>
-                        <div className='makerHolder'></div>
-                        <div className='makerHolder'></div>
-                      </Row>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col  md="12">
-                      <span>Notes:</span>
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            ) 
+          })}
+          
       </div>
     );
   }
