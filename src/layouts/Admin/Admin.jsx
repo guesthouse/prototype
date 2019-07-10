@@ -5,7 +5,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
-import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import routes from "routes.js";
 
@@ -108,11 +107,6 @@ class Admin extends React.Component {
             {this.getRoutes(routes)}
             <Redirect exact from="/admin" to="/admin/properties" />
           </Switch>
-          {// we don't want the Footer to be rendered on full screen maps page
-          this.props.location.pathname.indexOf("full-screen-map") !==
-          -1 ? null : (
-            <Footer fluid />
-          )}
         </div>
       </div>
     );

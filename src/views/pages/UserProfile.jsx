@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
               <div className="image">
                 <img
                   alt="..."
-                  src={require("assets/img/bg/damir-bosnjak.jpg")}
+                  src=''
                 />
               </div>
               <CardBody>

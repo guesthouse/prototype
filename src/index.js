@@ -7,11 +7,9 @@ import * as firebase from 'firebase';
 import AuthLayout from "layouts/Auth/Auth.jsx";
 import AdminLayout from "layouts/Admin/Admin.jsx";
 import BuildProfile from 'views/pages/BuildProfile/BuildProfile.jsx';
-import PropertyDetail from 'views/pages/PropertyDetail/PropertyDetail.jsx';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss";
-import "assets/demo/demo.css";
 
 const hist = createBrowserHistory();
 var config = {

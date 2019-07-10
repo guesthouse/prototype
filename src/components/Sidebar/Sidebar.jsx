@@ -4,7 +4,6 @@ import { Nav, Collapse } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/GuestHouseLogoWhite.svg";
 
 var ps;
