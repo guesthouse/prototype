@@ -54,18 +54,6 @@ class AddProperty extends React.Component {
       roomSize: '',
       furnitureItems: [],
     }
-
-    this.handleUploadState = this.handleUploadStart.bind(this)
-    this.handleProgress = this.handleProgress.bind(this)
-    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
-
-    this.handleText = this.handleText.bind(this)
-    this.setInstallDate = this.setInstallDate.bind(this)
-    this.setAgent = this.setAgent.bind(this)
-    this.setType = this.setType.bind(this)
-    this.setLocation = this.setLocation.bind(this)
-    this.setStatus = this.setStatus.bind(this)
-    this.saveProduct = this.saveProduct.bind(this)
   }
 
   handleUploadStart = () => this.setState({isUploading: true, progress: 0});

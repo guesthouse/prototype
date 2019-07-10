@@ -35,14 +35,9 @@ class EditProperty extends React.Component {
       makers: []
 
     }
-
-    this.toggle = this.toggle.bind(this);
-    this.toggleMakers = this.toggleMakers.bind(this)
-    this.showAdd = this.showAdd.bind(this);
-    this.hideAdd = this.hideAdd.bind(this);
   }
 
-  showAdd(){
+  showAdd = () => {
     const db = firebase.firestore();
     let accountRef = db.collection('users').doc()
     this.setState({
@@ -50,24 +45,24 @@ class EditProperty extends React.Component {
     });
   };
 
-  hideAdd(){
+  hideAdd = () => {
     this.setState({
       showAddModal: false,
     });
   };
 
-  toggle() {
+  toggle = () => {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen,
     }));
   }
-  toggleMakers() {
+  toggleMakers = () => {
     this.setState(prevState => ({
       dropdownOpenMakers: !prevState.dropdownOpenMakers,
     }));
   }
 
-  getMakersAndFurniture(){
+  getMakersAndFurniture = () => {
     const db = firebase.firestore();
     let furnitureRef = db.collection('furniture').doc()
       furnitureRef.get().then( doc => {

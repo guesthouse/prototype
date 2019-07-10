@@ -48,18 +48,6 @@ class editProduct extends React.Component {
       installDate: '',
       notes: ''
     }
-
-    this.handleUploadState = this.handleUploadStart.bind(this)
-    this.handleProgress = this.handleProgress.bind(this)
-    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
-
-    this.handleText = this.handleText.bind(this)
-    this.setInstallDate = this.setInstallDate.bind(this)
-    this.setMaker = this.setMaker.bind(this)
-    this.setType = this.setType.bind(this)
-    this.setLocation = this.setLocation.bind(this)
-    this.setStatus = this.setStatus.bind(this)
-    this.saveProduct = this.saveProduct.bind(this)
   }
 
   
