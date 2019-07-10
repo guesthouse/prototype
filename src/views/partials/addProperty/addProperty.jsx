@@ -229,7 +229,7 @@ class AddProperty extends React.Component {
             <CardBody>
               <Form>
                 <Row>
-                  <Col className="pr-1" md="8">
+                  <Col md="7">
                     <FormGroup>
                       <label>Address</label>
                       <Input
@@ -240,20 +240,32 @@ class AddProperty extends React.Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pr-1" md="4">
+                  <Col  md="3">
                     <FormGroup>
-                      <label>Listing URL</label>
+                      <label>City</label>
                       <Input
-                        placeholder="Address"
+                        placeholder=""
                         type="text"
                         onChange={this.handleText}
-                        id="propertyURL"
+                        id="city"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="2">
+                    <FormGroup>
+                      <label>State</label>
+                      <Input
+                        placeholder=""
+                        type="text"
+                        onChange={this.handleText}
+                        id="state"
                       />
                     </FormGroup>
                   </Col>
                 </Row>
+
                 <Row>
-                  <Col className="pr-1" md="6">
+                  <Col md="6">
                     <FormGroup>
                       <label>Type</label>
                       <Input
@@ -264,15 +276,15 @@ class AddProperty extends React.Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pl-1" md="6">
+
+                  <Col md="6">
                     <FormGroup>
-                      <label>Description</label>
+                      <label>Listing URL</label>
                       <Input
-                        // defaultValue={this.state.user.lastname}
-                        placeholder="Description"
+                        placeholder="Listing URL"
                         type="text"
                         onChange={this.handleText}
-                        id="description"
+                        id="propertyURL"
                       />
                     </FormGroup>
                   </Col>

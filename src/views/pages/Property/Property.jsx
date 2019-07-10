@@ -141,11 +141,6 @@ class Property extends React.Component {
                     </Col>
                   </Row>
 
-                  <Row>
-                    <Col  className="mr-auto">
-                      <h5>{this.state.fullname}</h5> 
-                    </Col>
-                  </Row>
                 </Link>
               )
             })}
